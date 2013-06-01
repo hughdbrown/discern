@@ -233,6 +233,7 @@ class OrganizationResource(SearchModelResource):
     users = fields.ToManyField("freeform_data.api.MembershipResource", attribute=user_query, null=True, related_name="organizations")
     #Also show members in the organization (useful for getting role)
     memberships = fields.ToManyField("freeform_data.api.MembershipResource", 'membership_set', null=True, related_name="organization")
+
     class Meta:
         queryset = Organization.objects.all()
         resource_name = 'organization'
@@ -274,6 +275,7 @@ class UserProfileResource(SearchModelResource):
     Encapsulates the UserProfile module
     """
     user = fields.ToOneField('freeform_data.api.UserResource', 'user', related_name='userprofile')
+
     class Meta:
         queryset = UserProfile.objects.all()
         resource_name = 'userprofile'
@@ -299,6 +301,7 @@ class UserResource(SearchModelResource):
     userprofile = fields.ToOneField('freeform_data.api.UserProfileResource', 'userprofile', related_name='user')
     organizations = fields.ToManyField('freeform_data.api.OrganizationResource', 'organization_set', null=True, related_name="users")
     memberships = fields.ToManyField("freeform_data.api.MembershipResource", 'membership_set', null=True, related_name="user")
+
     class Meta:
         queryset = User.objects.all()
         resource_name = 'user'
@@ -324,6 +327,7 @@ class MembershipResource(SearchModelResource):
     """
     user = fields.ToOneField('freeform_data.api.UserResource', 'user', related_name="memberships")
     organization = fields.ToOneField('freeform_data.api.OrganizationResource', 'organization', related_name="memberships")
+
     class Meta:
         queryset = Membership.objects.all()
         resource_name = 'membership'
@@ -345,6 +349,7 @@ class CourseResource(SearchModelResource):
     organizations = fields.ToManyField(OrganizationResource, 'organizations', null=True)
     users = fields.ToManyField(UserResource, 'users', null=True)
     problems = fields.ToManyField('freeform_data.api.ProblemResource', 'problem_set', null=True)
+
     class Meta:
         queryset = Course.objects.all()
         resource_name = 'course'
@@ -365,6 +370,7 @@ class ProblemResource(SearchModelResource):
     """
     essays = fields.ToManyField('freeform_data.api.EssayResource', 'essay_set', null=True, related_name='problem')
     courses = fields.ToManyField('freeform_data.api.CourseResource', 'courses')
+
     class Meta:
         queryset = Problem.objects.all()
         resource_name = 'problem'
@@ -388,6 +394,7 @@ class EssayResource(SearchModelResource):
     user = fields.ToOneField(UserResource, 'user', null=True)
     organization = fields.ToOneField(OrganizationResource, 'organization', null=True)
     problem = fields.ToOneField(ProblemResource, 'problem')
+
     class Meta:
         queryset = Essay.objects.all()
         resource_name = 'essay'
@@ -412,6 +419,7 @@ class EssayGradeResource(SearchModelResource):
     """
     user = fields.ToOneField(UserResource, 'user', null=True)
     essay = fields.ToOneField(EssayResource, 'essay')
+
     class Meta:
         queryset = EssayGrade.objects.all()
         resource_name = 'essaygrade'
