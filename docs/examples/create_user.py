@@ -7,8 +7,8 @@ from common_settings import *
 
 # In order to create a user, we need to define a username and a password
 data = {
-    'username' : 'test',
-    'password' : 'test'
+    'username': 'test',
+    'password': 'test'
 }
 
 # We need to explicitly define the content type to let the API know how to decode the data we are sending.
