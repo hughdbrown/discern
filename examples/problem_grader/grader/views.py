@@ -10,6 +10,7 @@ import helpers
 
 log = logging.getLogger(__name__)
 
+
 def register(request):
     """
     Register a new user for a given request
@@ -25,6 +26,7 @@ def register(request):
         'form': form,
         }))
 
+
 def index(request):
     """
     Index page for the site.
@@ -33,6 +35,7 @@ def index(request):
 
 #Available types of actions
 action_types = ["update", "delete", "get", "post"]
+
 
 @login_required
 def action(request):
@@ -144,12 +147,14 @@ def action(request):
     json_data = json.dumps(slumber_data)
     return HttpResponse(json_data)
 
+
 @login_required
 def course(request):
     """
     Render the page for courses
     """
     return render_to_response('course.html', RequestContext(request, {'model' : 'course', 'api_url' : "/grader/action"}))
+
 
 @login_required
 def problem(request):
@@ -187,12 +192,14 @@ def problem(request):
     })
     )
 
+
 @login_required
 def write_essays(request):
     """
     Render the page for writing essays
     """
     return render_to_response('write_essay.html', RequestContext(request, {'api_url' : "/grader/action", 'model' : 'essay',}))
+
 
 @login_required
 def grade_essays(request):
