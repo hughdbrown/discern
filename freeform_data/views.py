@@ -56,7 +56,7 @@ def error_response(message):
 
 
 def generic_response(message, success):
-    message = {'success' : success, 'message' : message}
+    message = {'success': success, 'message': message}
     return HttpResponse(json.dumps(message))
 
 
