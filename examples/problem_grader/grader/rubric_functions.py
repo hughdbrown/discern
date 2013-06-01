@@ -19,7 +19,7 @@ def get_rubric_data(problem_id, target_scores = None):
         rubric_dict = rubric.get_rubric_dict()
     if target_scores is not None:
         # If we have recieved target scores, mark the given rubric options as selected (score of 1 means select, 0 means not selected)
-        for i in xrange(0,len(rubric_dict)):
+        for i in xrange(0, len(rubric_dict)):
             if target_scores[i] == 1:
                 rubric_dict[i]['selected'] = True
     return rubric_dict
