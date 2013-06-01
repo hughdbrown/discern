@@ -11,6 +11,7 @@ import logging
 
 log= logging.getLogger(__name__)
 
+
 class Rubric(models.Model):
     """
     The rubric object is a way to locally store data about rubric options.
@@ -62,6 +63,7 @@ class Rubric(models.Model):
             options.append(model_to_dict(option))
         return options
 
+
 class RubricOption(models.Model):
     """
     Each rubric has multiple options
@@ -74,6 +76,7 @@ class RubricOption(models.Model):
     option_text = models.TextField()
     #Whether or not this option is selected (ie marked correct)
     selected = models.BooleanField(default=False)
+
 
 class UserProfile(models.Model):
     """
