@@ -59,7 +59,7 @@ def get_latest_created_model(problem, target_number=0):
     created_models = CreatedModel.objects.filter(
         problem=problem,
         creation_succeeded=True,
-        target_number = target_number,
+        target_number=target_number,
     ).order_by("-created")[:1]
 
     if created_models.count() == 0:
