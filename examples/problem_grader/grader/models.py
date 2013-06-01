@@ -48,8 +48,8 @@ class Rubric(models.Model):
             max_score = sum(all_scores)
 
         return {
-            'score' : final_score,
-            'max_score' : max_score
+            'score': final_score,
+            'max_score': max_score
         }
 
     def get_rubric_dict(self):
@@ -95,8 +95,8 @@ class UserProfile(models.Model):
         Returns the api authentication dictionary for the given user
         """
         return {
-            'username' : self.api_user,
-            'api_key' : self.api_key
+            'username': self.api_user,
+            'api_key': self.api_key
         }
 
 
@@ -119,8 +119,8 @@ def create_user_profile(sender, instance, created, **kwargs):
 
     # Data we will post to the api to make a user
     data = {
-        'username' : instance.username,
-        'password' : random_pass,
+        'username': instance.username,
+        'password': random_pass,
         }
 
     headers = {'content-type': 'application/json'}
