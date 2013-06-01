@@ -18,6 +18,6 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('freeform_data.views',
-      url(r'^login/$','login'),
-      url(r'^logout/$','logout'),
+      url(r'^login/$', 'login'),
+      url(r'^logout/$', 'logout'),
 )
