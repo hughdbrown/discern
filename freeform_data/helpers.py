@@ -42,7 +42,7 @@ def copy_permissions(base_instance, base_model, new_instance, new_model):
 def generate_new_permission(permission_name, new_model_name):
     new_model_name = re.sub(r"[_\W]", "", new_model_name).lower()
     permission_list = permission_name.split("_")
-    permission_list = permission_list[0:(len(permission_list) -1)]
+    permission_list = permission_list[0:(len(permission_list) - 1)]
     permission_list += [new_model_name]
     new_permission = "_".join(permission_list)
     return new_permission
