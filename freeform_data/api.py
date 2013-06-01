@@ -143,24 +143,24 @@ class SearchModelResource(ModelResource):
         self.is_authenticated(request)
         self.throttle_check(request)
 
-        #Run search via haystack and get list of objects
+        # Run search via haystack and get list of objects
         object_list = run_search(request,self._meta.model_type)
         objects = []
 
-        #Create bundle and authorization
+        # Create bundle and authorization
         auth = default_authorization()
         bundle = None
 
-        #Convert search result list into a list of django models
+        # Convert search result list into a list of django models
         object_list = [result.object for result in object_list if result is not None]
 
-        #If there is more than one object, then apply authorization limits to the list
+        # If there is more than one object, then apply authorization limits to the list
         if len(object_list)>0:
-            #Mock a bundle, needed to apply auth limits
+            # Mock a bundle, needed to apply auth limits
             bundle = self.build_bundle(obj=object_list[0], request=request)
             bundle = self.full_dehydrate(bundle)
 
-            #Apply authorization limits via auth object that we previously created
+            # Apply authorization limits via auth object that we previously created
             object_list = auth.read_list(MockQuerySet(self._meta.model_type, object_list),bundle)
 
         for result in object_list:
@@ -184,7 +184,7 @@ class CreateUserResource(ModelResource):
     class Meta:
         allowed_methods = ['post']
         object_class = User
-        #No authentication for create user, or authorization.  Anyone can create.
+        # No authentication for create user, or authorization.  Anyone can create.
         authentication = Authentication()
         authorization = Authorization()
         fields = ['username', 'email']
@@ -193,15 +193,15 @@ class CreateUserResource(ModelResource):
         throttle = default_throttling()
 
     def obj_create(self, bundle, **kwargs):
-        #Validate that the needed fields exist
+        # Validate that the needed fields exist
         validator = CustomFormValidation(form_class=UserForm, model_type=self._meta.resource_name)
         errors = validator.is_valid(bundle)
         if isinstance(errors, ErrorDict):
             raise BadRequest(errors.as_text())
-        #Extract needed fields
+        # Extract needed fields
         username, password, email = bundle.data['username'], bundle.data['password'], bundle.data['email']
         data_dict = {'username' : username, 'email' : email, 'password' : password, 'password1' : password, 'password2' : password}
-        #Pass the fields to django-allauth.  We want to use its email verification setup.
+        # Pass the fields to django-allauth.  We want to use its email verification setup.
         signup_form = SignupForm()
         signup_form.cleaned_data = data_dict
         try:
@@ -209,12 +209,12 @@ class CreateUserResource(ModelResource):
                 user = signup_form.save(bundle.request)
                 profile, created = UserProfile.objects.get_or_create(user=user)
             except AssertionError:
-                #If this fails, the user has a non-unique email address.
+                # If this fails, the user has a non-unique email address.
                 user = User.objects.get(username=username)
                 user.delete()
                 raise BadRequest("Email address has already been used, try another.")
 
-            #Need this so that the object is added to the bundle and exists during the dehydrate cycle.
+            # Need this so that the object is added to the bundle and exists during the dehydrate cycle.
             html = complete_signup(bundle.request, user, "")
             bundle.obj = user
         except IntegrityError:
@@ -237,10 +237,10 @@ class OrganizationResource(SearchModelResource):
     """
     courses = fields.ToManyField('freeform_data.api.CourseResource', 'course_set', null=True)
     essays = fields.ToManyField('freeform_data.api.EssayResource', 'essay_set', null=True)
-    #This maps the organization users to the users model via membership
+    # This maps the organization users to the users model via membership
     user_query = lambda bundle: bundle.obj.users.through.objects.all() or bundle.obj.users
     users = fields.ToManyField("freeform_data.api.MembershipResource", attribute=user_query, null=True, related_name="organizations")
-    #Also show members in the organization (useful for getting role)
+    # Also show members in the organization (useful for getting role)
     memberships = fields.ToManyField("freeform_data.api.MembershipResource", 'membership_set', null=True, related_name="organization")
 
     class Meta:
@@ -471,7 +471,7 @@ def add_membership(user,organization):
         organization = organization,
     )
     if users.count()==0:
-        #If a user is the first one in an organization, make them the administrator.
+        # If a user is the first one in an organization, make them the administrator.
         membership.role = UserRoles.administrator
         membership.save()
     else:
