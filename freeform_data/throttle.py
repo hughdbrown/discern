@@ -16,7 +16,7 @@ class UserAccessThrottle(CacheDBThrottle):
     build a statistics interface or a billing mechanism.
     """
     def __init__(self, throttle_at=150, timeframe=3600, expiration=None, model_type=None):
-        super(UserAccessThrottle, self).__init__(throttle_at,timeframe,expiration)
+        super(UserAccessThrottle, self).__init__(throttle_at, timeframe, expiration)
         self.model_type = model_type
 
     def should_be_throttled(self, identifier, **kwargs):
@@ -87,7 +87,7 @@ class UserAccessThrottle(CacheDBThrottle):
         """
         url = kwargs.get('url', '')
         request_method = kwargs.get('request_method', '')
-        new_id = "{0}.{1}.{2}".format(identifier,url,request_method)
+        new_id = "{0}.{1}.{2}".format(identifier, url, request_method)
         return new_id, url, request_method
 
     def get_user(self, identifier):
