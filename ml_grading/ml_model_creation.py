@@ -105,7 +105,7 @@ def handle_single_problem(problem):
         success, latest_created_model=ml_grading_util.get_latest_created_model(problem,m)
 
         if success:
-            sub_count_diff=graded_sub_count-latest_created_model.number_of_essays
+            sub_count_diff=graded_sub_count -latest_created_model.number_of_essays
         else:
             sub_count_diff = graded_sub_count
 
