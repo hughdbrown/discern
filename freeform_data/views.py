@@ -24,7 +24,7 @@ def login(request):
     except:
         pass
 
-    if not p.has_key('username') or not p.has_key('password'):
+    if 'username' not in p or 'password' not in p:
         return error_response('Insufficient login info')
     if isinstance(p['username'], list):
         p['username'] = p['username'][0]
