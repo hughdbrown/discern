@@ -121,7 +121,7 @@ def get_pickle_data(prompt_string, feature_ext, classifier, text, score):
     classifier is a trained classifier
     model_path is the path of write out the model file to
     """
-    model_file = {'prompt': prompt_string, 'extractor': feature_ext, 'model': classifier, 'text' : text, 'score' : score}
+    model_file = {'prompt': prompt_string, 'extractor': feature_ext, 'model': classifier, 'text': text, 'score': score}
     return pickle.dumps(model_file)
 
 
@@ -129,5 +129,5 @@ def dump_model_to_file(prompt_string, feature_ext, classifier, text, score, mode
     """
     Dumps input data to a file.  See get_pickle_data for argument types.
     """
-    model_file = {'prompt': prompt_string, 'extractor': feature_ext, 'model': classifier, 'text' : text, 'score' : score}
+    model_file = {'prompt': prompt_string, 'extractor': feature_ext, 'model': classifier, 'text': text, 'score': score}
     pickle.dump(model_file, file=open(model_path, "w"))
