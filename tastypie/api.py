@@ -117,7 +117,7 @@ class Api(object):
 
         urlpatterns += patterns('',
             *pattern_list
-        )
+                                )
         return urlpatterns
 
     def top_level(self, request, api_name=None):
