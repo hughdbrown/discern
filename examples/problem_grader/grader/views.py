@@ -76,7 +76,7 @@ def action(request):
     # Define a base rubric
     rubric = {'options' : []}
     # If we are posting a problem, then there is additional processing to do before we can submit to the API
-    if action=="post" and model=="problem":
+    if action == "post" and model == "problem":
         # Grab the rubric for later.
         rubric = data['rubric'].copy()
         # Add in two needed fields (the api requires them)
@@ -89,15 +89,15 @@ def action(request):
         del data['course']
 
     # We need to convert the integer id into a resource uri before posting to the API
-    if action=="post" and model=="essay":
+    if action == "post" and model == "essay":
         data['problem'] = helpers.construct_related_uri(data['problem'], 'problem')
 
     # We need to convert the integer id into a resource uri before posting to the API
-    if action=="post" and model=="essaygrade":
+    if action == "post" and model == "essaygrade":
         data['essay'] = helpers.construct_related_uri(data['essay'], 'essay')
 
     # If we are deleting a problem, delete its local model uri
-    if action=="delete" and model=="problem":
+    if action == "delete" and model == "problem":
         rubric_functions.delete_rubric_data(id)
 
     # Setup all slumber models for the current user
@@ -121,14 +121,14 @@ def action(request):
         raise
 
     # If we have posted a problem, we need to create a local rubric object to store our rubric (the api does not do this)
-    if action=="post" and model=="problem":
+    if action == "post" and model == "problem":
         problem_id = slumber_data['id']
         rubric['problem_id'] = problem_id
         # Create the rubric object
         rubric_functions.create_rubric_objects(rubric, request)
 
     # Append rubric to problem and essay objects
-    if (action in ["get", "post"] and model=="problem") or (action=="get" and model=="essay"):
+    if (action in ["get", "post"] and model == "problem") or (action == "get" and model == "essay"):
         if isinstance(slumber_data,list):
             for i in xrange(0,len(slumber_data)):
                     slumber_data[i]['rubric'] = helpers.get_rubric_data(model, slumber_data[i])
@@ -136,7 +136,7 @@ def action(request):
             slumber_data['rubric'] = helpers.get_rubric_data(model, slumber_data)
 
     # append essaygrades to essay objects
-    if action=="get" and model=="essay":
+    if action == "get" and model == "essay":
         essaygrades = slumber_models['essaygrade'].action('get')
         if isinstance(slumber_data,list):
             for i in xrange(0,len(slumber_data)):
@@ -174,7 +174,7 @@ def problem(request):
     course_name = None
 
     # If a course to match problems to has been specified, grab the matching course and return it
-    if matching_course_id!= -1:
+    if matching_course_id != -1:
         match_course = True
         user = request.user
         slumber_models = helpers.setup_slumber_models(user)
