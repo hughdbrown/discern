@@ -5,14 +5,14 @@ Deployment settings file
 from settings import *
 import json
 
-DEBUG=False
+DEBUG = False
 
 TIME_BETWEEN_INDEX_REBUILDS = 60 * 30  # seconds
 
 # Tastypie throttle settings
 THROTTLE_AT = 100  # Throttle requests after this number in below timeframe
-THROTTLE_TIMEFRAME= 60 * 60  # Timeframe in which to throttle N requests, seconds
-THROTTLE_EXPIRATION= 24 * 60 * 60  # When to remove throttle entries from cache, seconds
+THROTTLE_TIMEFRAME = 60 * 60  # Timeframe in which to throttle N requests, seconds
+THROTTLE_EXPIRATION = 24 * 60 * 60  # When to remove throttle entries from cache, seconds
 
 with open(os.path.join(ENV_ROOT,"env.json")) as env_file:
     ENV_TOKENS = json.load(env_file)
@@ -56,7 +56,7 @@ if AWS_SES_REGION_NAME is not None:
 # Set this for django-analytical.  Because django-analytical enables the service if the key exists,
 # ensure that the settings value is only created if the key exists in the deployment settings.
 ga_key = AUTH_TOKENS.get("GOOGLE_ANALYTICS_PROPERTY_ID", "")
-if len(ga_key)>1:
+if len(ga_key) > 1:
     GOOGLE_ANALYTICS_PROPERTY_ID = ga_key
 
 # Try to set the domain for the current site
