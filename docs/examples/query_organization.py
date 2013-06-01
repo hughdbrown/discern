@@ -8,8 +8,8 @@ login_url = API_BASE_URL + "/essay_site/login/"
 
 # These are the credentials that we created in the previous example.
 data = {
-    'username' : 'test',
-    'password' : 'test'
+    'username': 'test',
+    'password': 'test'
 }
 
 # We need to explicitly define the content type to let the API know how to decode the data we are sending.
@@ -53,8 +53,8 @@ for field in response_json['fields']:
 
 # This is the data that will be used to construct our organization
 data = {
-    'organization_name' : "Test",
-    'organization_size' : 1,
+    'organization_name': "Test",
+    'organization_size': 1,
 }
 
 # Let's create our object by posting to the server!
