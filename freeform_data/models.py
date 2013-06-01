@@ -10,7 +10,7 @@ from django.contrib import admin
 from django.contrib.auth.models import SiteProfileNotAvailable
 
 import logging
-log=logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 # CLASSES THAT WRAP CONSTANTS
 
@@ -82,7 +82,7 @@ class Membership(models.Model):
 
     def save(self, *args, **kwargs):
         members_count = Membership.objects.filter(user = self.user).exclude(id=self.id).count()
-        if members_count>=settings.MEMBERSHIP_LIMIT:
+        if members_count >= settings.MEMBERSHIP_LIMIT:
             error_message = "You can currently only be a member of a single organization.  This will hopefully be changed in the future.  Generated for user {0}.".format(self.user)
             log.info(error_message)
             return error_message
@@ -236,8 +236,8 @@ def pre_delete_essaygrade(sender,instance, **kwargs):
     """
     essay = instance.essay
     ml_graded_count = essay.essaygrade_set.filter(grader_type=GraderTypes.machine).count()
-    if ml_graded_count<=1:
-        essay.has_been_ml_graded=False
+    if ml_graded_count <= 1:
+        essay.has_been_ml_graded = False
         essay.save()
 
 
@@ -289,7 +289,7 @@ def add_creator_permissions(sender, instance, **kwargs):
         if isinstance(instance, User):
             user = instance
         elif isinstance(instance, UserProfile):
-            user=instance.user
+            user = instance.user
         else:
             user = get_request().user
         if instance_name in PERMISSION_MODELS:
