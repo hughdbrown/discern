@@ -378,8 +378,3 @@ class FinalTest(unittest.TestCase):
         endpoint, schema = get_urls("essaygrade")
         data = c.get(endpoint, data={'format' : 'json'})
         self.assertEqual(len(json.loads(data.content)['objects']),0)
-
-
-
-
-
