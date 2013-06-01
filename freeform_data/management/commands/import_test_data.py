@@ -27,7 +27,6 @@ class Command(BaseCommand):
     args = "<filename>"
     help = "Poll grading controller and send items to be graded to ml"
 
-
     def handle(self, *args, **options):
         """
         Read from file
@@ -35,7 +34,6 @@ class Command(BaseCommand):
 
         parser = SafeConfigParser()
         parser.read(args[0])
-
 
         print("Starting import...")
         print("Reading config from file {0}".format(args[0]))
