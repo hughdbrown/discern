@@ -48,7 +48,7 @@ class EssayGradeIndex(BaseIndex):
     confidence = DecimalField(model_attr="confidence")
     model_type = EssayGrade
 
-#Register all of the search indexes.  Must be done in pairs.
+# Register all of the search indexes.  Must be done in pairs.
 site.register(Organization, OrganizationIndex)
 site.register(Course, CourseIndex)
 site.register(Problem, ProblemIndex)
