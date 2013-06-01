@@ -235,6 +235,3 @@ class SlumberModelDiscovery(object):
             field_model = SlumberModel(self.api_url, field, self.api_auth)
             slumber_models[field] = field_model
         return slumber_models
-
-
-
