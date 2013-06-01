@@ -200,5 +200,3 @@ def grade_essays(request):
     Render the page for grading essays
     """
     return render_to_response('grade_essay.html', RequestContext(request, {'api_url' : "/grader/action", 'model' : 'essaygrade',}))
-
-
