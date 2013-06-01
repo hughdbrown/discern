@@ -17,7 +17,7 @@ class ProblemForm(forms.Form):
     prompt = CharField(min_length=0, required=True)
     name = CharField(min_length=0, required=False)
 
-    def __init__(self, problem_object= None, **kwargs):
+    def __init__(self, problem_object=None, **kwargs):
         super(ProblemForm, self).__init__(**kwargs)
         validator = django_validators.JSONListValidator()
         self.fields['max_target_scores'] = fields.JSONListField(required=True, validators=[validator])
@@ -39,7 +39,7 @@ class EssayForm(forms.Form):
 
         validator = django_validators.JSONListValidator(matching_list_len=self.add_pred_length)
 
-        self.fields['additional_predictors'] = fields.JSONListField(required = False, validators=[validator])
+        self.fields['additional_predictors'] = fields.JSONListField(required=False, validators=[validator])
 
 
 class EssayGradeForm(forms.Form):
@@ -52,7 +52,7 @@ class EssayGradeForm(forms.Form):
     success = BooleanField(required=True)
     confidence = DecimalField(required=False, max_value=1, max_digits=10)
 
-    def __init__(self, problem_object = None, **kwargs):
+    def __init__(self, problem_object=None, **kwargs):
         super(EssayGradeForm, self).__init__(**kwargs)
         self.max_target_scores = None
         if problem_object is not None:
@@ -60,7 +60,7 @@ class EssayGradeForm(forms.Form):
 
         validator = django_validators.JSONListValidator(matching_list=self.max_target_scores)
 
-        self.fields['target_scores'] = fields.JSONListField(required = True, validators=[validator])
+        self.fields['target_scores'] = fields.JSONListField(required=True, validators=[validator])
 
 
 class UserForm(forms.Form):
@@ -71,5 +71,5 @@ class UserForm(forms.Form):
     email = EmailField(min_length=3, required=True)
     password = CharField(widget=forms.PasswordInput())
 
-    def __init__(self, user_object= None, **kwargs):
+    def __init__(self, user_object=None, **kwargs):
         super(UserForm, self).__init__(**kwargs)
