@@ -8,7 +8,7 @@ log = logging.getLogger(__name__)
 
 
 def index(request):
-    return render_to_response("index.html",RequestContext(request))
+    return render_to_response("index.html", RequestContext(request))
 
 
 def userprofile(request):
