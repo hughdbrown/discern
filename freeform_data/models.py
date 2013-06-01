@@ -81,7 +81,7 @@ class Membership(models.Model):
         )
 
     def save(self, *args, **kwargs):
-        members_count = Membership.objects.filter(user = self.user).exclude(id=self.id).count()
+        members_count = Membership.objects.filter(user=self.user).exclude(id=self.id).count()
         if members_count >= settings.MEMBERSHIP_LIMIT:
             error_message = "You can currently only be a member of a single organization.  This will hopefully be changed in the future.  Generated for user {0}.".format(self.user)
             log.info(error_message)
