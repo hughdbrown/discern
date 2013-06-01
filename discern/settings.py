@@ -139,7 +139,7 @@ PIPELINE_JS = {
             'js/setup-env.js',
             'js/api-views.js',
             'js/jquery.cookie.js',
-            ],
+        ],
         'output_filename': 'js/util.js',
     }
 }
@@ -162,15 +162,15 @@ PIPELINE_CSS = {
             'css/bootstrap.css',
             'css/bootstrap-responsive.css',
             'css/bootstrap-extensions.css',
-            ],
+        ],
         'output_filename': 'css/bootstrap.css',
-        },
+    },
     'util_css': {
         'source_filenames': [
             'css/jquery-ui-1.10.2.custom.css',
-            ],
+        ],
         'output_filename': 'css/util_css.css',
-        }
+    }
 }
 
 
@@ -288,10 +288,10 @@ LOGGING = {
         'standard': {
             'format': '%(asctime)s %(levelname)s %(process)d '
                       '[%(name)s] %(filename)s:%(lineno)d - %(message)s',
-            },
+        },
         'syslog_format': {'format': syslog_format},
         'raw': {'format': '%(message)s'},
-        },
+    },
     'handlers': {
         'console': {
 #            'level': 'DEBUG' if DEBUG else 'INFO',
@@ -299,29 +299,29 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'standard',
             'stream': sys.stdout,
-            },
+        },
         'null': {
             'level': 'DEBUG',
             'class': 'django.utils.log.NullHandler',
-            },
         },
+    },
     'loggers': {
         'django.request': {
             'handlers': ['console'],
             'level': 'ERROR',
             'propagate': True,
-            },
+        },
         '': {
             'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': False
-            },
+        },
         'django.db.backends': {
             'handlers': ['null'],  # Quiet by default!
             'propagate': False,
             'level': 'DEBUG',
-            },
-        }
+        },
+    }
 }
 
 AUTH_PROFILE_MODULE = 'freeform_data.UserProfile'
