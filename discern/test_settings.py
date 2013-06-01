@@ -1,10 +1,10 @@
 from settings import *
 import logging
 
-south_logger=logging.getLogger('south')
+south_logger = logging.getLogger('south')
 south_logger.setLevel(logging.INFO)
 
-warning_logger=logging.getLogger('py.warnings')
+warning_logger = logging.getLogger('py.warnings')
 warning_logger.setLevel(logging.ERROR)
 
 DATABASES = {
@@ -31,4 +31,4 @@ BROKER_BACKEND = 'memory'
 HAYSTACK_WHOOSH_PATH = os.path.join(ENV_ROOT,"whoosh_api_index_test")
 
 # Model settings
-MEMBERSHIP_LIMIT=50  # For testing purposes, relax membership limits
+MEMBERSHIP_LIMIT = 50  # For testing purposes, relax membership limits
