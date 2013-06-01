@@ -4,7 +4,7 @@ Here we create an institution(i.e., Reddit).
 '''
 
 from common_settings import *
-import praw # Python Reddit API Wrapper
+import praw  # Python Reddit API Wrapper
 
 # boilerplate login code
 session = requests.session()
