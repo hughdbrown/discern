@@ -6,6 +6,7 @@ from models import Problem, Essay
 import logging
 log = logging.getLogger(__name__)
 
+
 class CustomFormValidation(FormValidation):
     """
     A validation class that uses a Django ``Form`` to validate the data.
