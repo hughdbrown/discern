@@ -37,7 +37,7 @@ class SlumberModel(object):
     Wraps an API model, and provides abstractions for get/post/update/delete.  Used to simplify talking with the api.
     See https://github.com/KayEss/django-slumber for more details on slumber.
     """
-    #These are not required fields, so don't advertise them as such
+    # These are not required fields, so don't advertise them as such
     excluded_fields = ['created', 'id', 'resource_uri', 'id', 'modified']
 
     def __init__(self,api_url, model_type, api_auth):
@@ -56,10 +56,10 @@ class SlumberModel(object):
         """
         Gets the start of the slumber model path for an api resource
         """
-        #In slumber, the base slumber.API has attributes for each model at the endpoint
+        # In slumber, the base slumber.API has attributes for each model at the endpoint
         ref = getattr(self.api,self.model_type)
         if id is not None:
-            #If we are referencing a specific model id, add it into the base
+            # If we are referencing a specific model id, add it into the base
             ref = ref(id)
         return ref
 
@@ -69,17 +69,17 @@ class SlumberModel(object):
         id - int
         data - Not used
         """
-        #Create the arguments to send to the api
+        # Create the arguments to send to the api
         new_arguments = self.api_auth.copy()
-        #limit=0 disables pagination
+        # limit=0 disables pagination
         new_arguments['limit'] = 0
 
         if id is not None:
-            #Get a single object
+            # Get a single object
             self.objects = self.get_base_model(id).get(**new_arguments)
             return self.objects
         else:
-            #Get a list of objects
+            # Get a list of objects
             return self.get_base_model().get(**new_arguments).get('objects', None)
 
     @property
@@ -108,18 +108,18 @@ class SlumberModel(object):
         id - Not used
         data - the data to post
         """
-        #Check to see if all required fields are being filled in
+        # Check to see if all required fields are being filled in
         for field in self.required_fields:
             if field not in data:
                error_message = "Key {0} not present in post data, but is required.".format(field)
                log.info(error_message)
                raise InvalidValueException(error_message)
-        #Add in the data to post
+        # Add in the data to post
         new_arguments = self.api_auth.copy()
         new_arguments['data'] = data
 
         new = self.get_base_model().post(**new_arguments)
-        #Add the object to the internal objects dict
+        # Add the object to the internal objects dict
         self.objects.append(new)
         return new
 
@@ -142,10 +142,10 @@ class SlumberModel(object):
         id - int, instance to delete
         data - not used
         """
-        #Delete the instance
+        # Delete the instance
         response = self.get_base_model(id=id).delete(**self.api_auth)
 
-        #Find a match and remove the model from the internal list
+        # Find a match and remove the model from the internal list
         match = self.find_model_by_id(id)
         if match is not None:
             self.objects.pop(match)
@@ -157,14 +157,14 @@ class SlumberModel(object):
         id - int, instance to update
         data - data to update with
         """
-        #Refresh the internal model list
+        # Refresh the internal model list
         self.get()
-        #Add the data to be posted
+        # Add the data to be posted
         new_arguments = self.api_auth.copy()
         new_arguments['data'] = data
-        #Update
+        # Update
         response = self.get_base_model(id=id).update(**new_arguments)
-        #Update in internal list
+        # Update in internal list
         match = self.find_model_by_id(id)
         self.objects[match] = response
         return response
@@ -177,32 +177,32 @@ class SlumberModel(object):
         data - dict data if needed for the action
         """
 
-        #Define the actions that are possible, and map them to functions
+        # Define the actions that are possible, and map them to functions
         action_dict = {
             'get' : self.get,
             'post' : self.post,
             'update' : self.update,
             'delete' : self.delete,
         }
-        #Check to see if action is possible
+        # Check to see if action is possible
         if action not in action_dict:
             error = "Could not find action {0} in registered actions.".format(action)
             log.info(error)
             raise InvalidValueException(error)
 
-        #Check to see if id is provided for update and delete
+        # Check to see if id is provided for update and delete
         if action in ['update', 'delete'] and id is None:
             error = "Need to provide an id along with action {0}.".format(action)
             log.info(error)
             raise InvalidValueException(error)
 
-        #check to see if data is provided for update and post
+        # check to see if data is provided for update and post
         if action in ['update', 'post'] and data is None:
             error = "Need to provide data along with action {0}.".format(action)
             log.info(error)
             raise InvalidValueException(error)
 
-        #Perform the action
+        # Perform the action
         result = action_dict[action](data=data, id=id)
         return result
 
@@ -218,7 +218,7 @@ class SlumberModelDiscovery(object):
         """
         self.api_url = api_url
         self.api_auth = api_auth
-        #Append format=json to avoid error
+        # Append format=json to avoid error
         self.schema_url = join_without_slash(self.api_url, "?format=json")
 
     def get_schema(self):
