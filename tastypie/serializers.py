@@ -6,7 +6,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.serializers import json
 try:
     import json as simplejson
-except ImportError: # < Python 2.6
+except ImportError:  # < Python 2.6
     from django.utils import simplejson
 from django.utils.encoding import force_unicode
 from tastypie.bundle import Bundle
