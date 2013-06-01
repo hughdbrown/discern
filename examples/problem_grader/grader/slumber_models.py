@@ -52,7 +52,7 @@ class SlumberModel(object):
         self.api_auth = api_auth
         self.objects = []
 
-    def get_base_model(self, id = None):
+    def get_base_model(self, id=None):
         """
         Gets the start of the slumber model path for an api resource
         """
@@ -63,7 +63,7 @@ class SlumberModel(object):
             ref = ref(id)
         return ref
 
-    def get(self, id = None, data = None, **kwargs):
+    def get(self, id=None, data=None, **kwargs):
         """
         Get an object or list of objects from the api
         id - int
@@ -102,7 +102,7 @@ class SlumberModel(object):
                 required_fields.append(field)
         return required_fields
 
-    def post(self, id = None, data = None, **kwargs):
+    def post(self, id=None, data=None, **kwargs):
         """
         Posts a new instance to the api
         id - Not used
@@ -136,7 +136,7 @@ class SlumberModel(object):
                 break
         return match
 
-    def delete(self, id = None, data = None, **kwargs):
+    def delete(self, id=None, data=None, **kwargs):
         """
         Delete a given instance of a model
         id - int, instance to delete
@@ -151,7 +151,7 @@ class SlumberModel(object):
             self.objects.pop(match)
         return response
 
-    def update(self, id = None, data = None, **kwargs):
+    def update(self, id=None, data=None, **kwargs):
         """
         Update a given instance of a model
         id - int, instance to update
@@ -169,7 +169,7 @@ class SlumberModel(object):
         self.objects[match] = response
         return response
 
-    def action(self, action, id=None, data = None):
+    def action(self, action, id=None, data=None):
         """
         Perform a given action
         action - see the keys in action_dict for the values this can take
@@ -228,7 +228,7 @@ class SlumberModelDiscovery(object):
         schema = requests.get(self.schema_url, params=self.api_auth)
         return json.loads(schema.content)
 
-    def generate_models(self, model_names = None):
+    def generate_models(self, model_names=None):
         """
         Using the schema, generate slumber models for each of the api models
         model_names - optional list of slumber models to generate
