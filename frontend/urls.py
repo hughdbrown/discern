@@ -11,6 +11,3 @@ urlpatterns =patterns('frontend.views',
     url(r'^organization/$','organization'),
     url(r'^$','index'),
 )
-
-
-
