@@ -14,6 +14,7 @@ from boto.s3.key import Key
 
 log=logging.getLogger(__name__)
 
+
 def create_directory(model_path):
     """
     Creates a directory for a file if it does not exist
@@ -24,6 +25,7 @@ def create_directory(model_path):
         os.makedirs(directory)
 
     return True
+
 
 def get_model_path(problem, target_number=0):
     """
@@ -87,6 +89,7 @@ def check_if_model_started(problem, target_number=0):
 
     return True, model_started, created_model
 
+
 def upload_to_s3(string_to_upload, keyname, bucketname):
     '''
     Upload file to S3 using provided keyname.
@@ -109,6 +112,7 @@ def upload_to_s3(string_to_upload, keyname, bucketname):
     except:
         return False, "Could not connect to S3."
 
+
 def get_pickle_data(prompt_string, feature_ext, classifier, text, score):
     """
     Dumps data to a pickle string
@@ -119,6 +123,7 @@ def get_pickle_data(prompt_string, feature_ext, classifier, text, score):
     """
     model_file = {'prompt': prompt_string, 'extractor': feature_ext, 'model': classifier, 'text' : text, 'score' : score}
     return pickle.dumps(model_file)
+
 
 def dump_model_to_file(prompt_string, feature_ext, classifier, text, score,model_path):
     """
