@@ -96,7 +96,7 @@ def create_organization():
     Create an organization
     """
     Membership.objects.all().delete()
-    organization_object =  {"name" : "edX"}
+    organization_object = {"name" : "edX"}
     result = create_object("organization", organization_object)
     organization_resource_uri = json.loads(result.content)['resource_uri']
     return organization_resource_uri
