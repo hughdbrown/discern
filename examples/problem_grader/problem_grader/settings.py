@@ -21,7 +21,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'db/grader.db',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
@@ -38,11 +38,11 @@ CACHES = {
     }
 }
 
-#Avoid clashes with api by changing these
+# Avoid clashes with api by changing these
 SESSION_COOKIE_NAME = "problemgradersessionid"
 CSRF_COOKIE_NAME = "problemgradercsrftoken"
 
-#Figure out where the API is!
+# Figure out where the API is!
 API_URL_BASE = "http://127.0.0.1:7999/"
 API_URL_INTERMEDIATE = "essay_site/api/v1/"
 FULL_API_START = API_URL_BASE + API_URL_INTERMEDIATE
@@ -86,7 +86,7 @@ MEDIA_URL = ''
 
 STATIC_ROOT = os.path.abspath(REPO_PATH / "staticfiles")
 
-#Make the static root dir if it does not exist
+# Make the static root dir if it does not exist
 if not os.path.isdir(STATIC_ROOT):
     os.mkdir(STATIC_ROOT)
 
