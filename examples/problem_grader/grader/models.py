@@ -134,7 +134,7 @@ def create_user_profile(sender, instance, created, **kwargs):
     while status_code == 400 and counter < 2 and not instance.profile.api_user_created:
         try:
             # Post our information to try to create a user
-            response = requests.post(create_user_url, data=json.dumps(data),headers=headers)
+            response = requests.post(create_user_url, data=json.dumps(data), headers=headers)
             status_code = response.status_code
             # If a user has been created, store the api key locally
             if status_code == 201:
