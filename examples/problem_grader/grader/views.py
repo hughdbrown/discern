@@ -183,7 +183,6 @@ def problem(request):
 
     matching_course_id = str(matching_course_id)
 
-
     return render_to_response('problem.html', RequestContext(request, {'model' : 'problem',
                                                                        'api_url' : "/grader/action",
                                                                        'matching_course_id' : matching_course_id,
