@@ -95,11 +95,11 @@ class CustomFormValidation(FormValidation):
         problem_obj = None
         for field in kwargs['data']:
             # Essays have problem fields that can be scraped to get a problem object
-            if field=="problem" and self.model_type=="essay":
+            if field == "problem" and self.model_type == "essay":
                 problem_id = self.uri_to_pk(kwargs['data'][field])
                 problem_obj = model_to_dict(Problem.objects.get(id=problem_id))
             # Essaygrades have essay fields that can be scraped to get a problem object
-            elif field=="essay" and self.model_type=="essaygrade":
+            elif field == "essay" and self.model_type == "essaygrade":
                 essay_id = self.uri_to_pk(kwargs['data'][field])
                 essay_obj = Essay.objects.get(id=essay_id)
                 problem_obj = model_to_dict(essay_obj.problem)
