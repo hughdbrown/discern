@@ -15,6 +15,7 @@ class ProblemForm(forms.Form):
     number_of_additional_predictors = IntegerField(min_value=0, required=False)
     prompt = CharField(min_length=0, required=True)
     name = CharField(min_length=0, required=False)
+
     def __init__(self, problem_object= None, **kwargs):
         super(ProblemForm, self).__init__(**kwargs)
         validator = django_validators.JSONListValidator()
@@ -26,6 +27,7 @@ class EssayForm(forms.Form):
     """
     essay_text = CharField(min_length=0, required=True)
     essay_type = ChoiceField(choices=ESSAY_TYPES, required=True)
+
     def __init__(self, problem_object=None, **kwargs):
         super(EssayForm, self).__init__(**kwargs)
         if problem_object is not None:
@@ -46,6 +48,7 @@ class EssayGradeForm(forms.Form):
     annotated_text = CharField(min_length=0, required=False)
     success = BooleanField(required=True)
     confidence = DecimalField(required=False, max_value=1, max_digits=10)
+
     def __init__(self, problem_object = None, **kwargs):
         super(EssayGradeForm, self).__init__(**kwargs)
         self.max_target_scores = None
@@ -63,5 +66,6 @@ class UserForm(forms.Form):
     username = CharField(min_length=3, required=True)
     email = EmailField(min_length=3, required=True)
     password = CharField(widget=forms.PasswordInput())
+
     def __init__(self, user_object= None, **kwargs):
         super(UserForm, self).__init__(**kwargs)
