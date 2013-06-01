@@ -132,7 +132,7 @@ class SearchModelResource(ModelResource):
         """
         return [
             url(r"^(?P<resource_name>%s)/search%s$" % (self._meta.resource_name, trailing_slash()), self.wrap_view('get_search'), name="api_get_search"),
-            ]
+        ]
 
     def get_search(self, request, **kwargs):
         """
@@ -170,7 +170,7 @@ class SearchModelResource(ModelResource):
 
         object_list = {
             'objects': objects,
-            }
+        }
 
         self.log_throttled_access(request)
         return self.create_response(request, object_list)
