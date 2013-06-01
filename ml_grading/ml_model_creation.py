@@ -137,7 +137,7 @@ def handle_single_problem(problem):
                     'creation_succeeded': False,
                     'creation_started': True,
                     'target_number': m,
-                    }
+                }
                 created_model = CreatedModel(**created_model_dict_initial)
                 created_model.save()
                 transaction.commit()
@@ -182,7 +182,7 @@ def handle_single_problem(problem):
                     's3_bucketname': str(settings.S3_BUCKETNAME),
                     'model_relative_path': relative_model_path,
                     'model_full_path': full_model_path,
-                    }
+                }
 
                 transaction.commit()
                 try:
