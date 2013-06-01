@@ -68,6 +68,3 @@ json_object = json.loads(response.text)
 
 #We can see that some fields were automatically created.  The created and modified fields tell us when the model was made and created.
 #Some related fields were also automatically populated.  These will be explained better when related fields are explained.
-
-
-
