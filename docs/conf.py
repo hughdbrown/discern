@@ -191,7 +191,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'Discern.tex', u'Discern Documentation',
+    ('index', 'Discern.tex', u'Discern Documentation',
    u'edX', 'manual'),
 ]
 
@@ -235,7 +235,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'Discern', u'Discern Documentation',
+    ('index', 'Discern', u'Discern Documentation',
    u'edX', 'Discern', 'One line description of project.',
    'Miscellaneous'),
 ]
