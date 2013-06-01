@@ -12,7 +12,7 @@ from models import CreatedModel
 from boto.s3.connection import S3Connection
 from boto.s3.key import Key
 
-log=logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 
 def create_directory(model_path):
@@ -20,7 +20,7 @@ def create_directory(model_path):
     Creates a directory for a file if it does not exist
     model_path - path to a file
     """
-    directory=path(model_path).dirname()
+    directory = path(model_path).dirname()
     if not os.path.exists(directory):
         os.makedirs(directory)
 
@@ -35,15 +35,15 @@ def get_model_path(problem, target_number=0):
     """
     problem_id = problem.id
 
-    base_path=settings.ML_MODEL_PATH
+    base_path = settings.ML_MODEL_PATH
     # Ensure that directory exists, create if it doesn't
     create_directory(base_path)
 
     # Create a filepath from the problem id and target number that is unique across problems
-    fixed_location="{0}_{1}".format(problem_id,target_number)
+    fixed_location = "{0}_{1}".format(problem_id,target_number)
     # Add a time to make it unique within the scope of this problem
-    fixed_location+="_" +timezone.now().strftime("%Y%m%d%H%M%S")
-    full_path=os.path.join(base_path,fixed_location)
+    fixed_location += "_" + timezone.now().strftime("%Y%m%d%H%M%S")
+    full_path = os.path.join(base_path,fixed_location)
     # return relative and full path because this model may be sent to S3 and to other machines
     return fixed_location,full_path
 
@@ -56,13 +56,13 @@ def get_latest_created_model(problem, target_number=0):
     """
 
     # Find the latest model that meets the criteria
-    created_models=CreatedModel.objects.filter(
+    created_models = CreatedModel.objects.filter(
         problem=problem,
         creation_succeeded=True,
         target_number = target_number,
     ).order_by("-created")[:1]
 
-    if created_models.count()==0:
+    if created_models.count() == 0:
         return False, "No valid models for location."
 
     return True, created_models[0]
@@ -75,16 +75,16 @@ def check_if_model_started(problem, target_number=0):
     target_number - integer, the number of the target that we are looking up
     """
     model_started = False
-    created_models=CreatedModel.objects.filter(
+    created_models = CreatedModel.objects.filter(
         problem=problem,
         target_number=target_number,
     ).order_by("-created")[:1]
 
-    if created_models.count()==0:
+    if created_models.count() == 0:
         return True, model_started, ""
 
     created_model = created_models[0]
-    if created_model.creation_succeeded==False and created_model.creation_started==True:
+    if created_model.creation_succeeded == False and created_model.creation_started == True:
         model_started = True
 
     return True, model_started, created_model
@@ -106,7 +106,7 @@ def upload_to_s3(string_to_upload, keyname, bucketname):
         k = Key(bucket)
         k.key = keyname
         k.set_contents_from_string(string_to_upload)
-        public_url = k.generate_url(60 *60 *24 *365)  # URL timeout in seconds.
+        public_url = k.generate_url(60 * 60 * 24 * 365)  # URL timeout in seconds.
 
         return True, public_url
     except:
