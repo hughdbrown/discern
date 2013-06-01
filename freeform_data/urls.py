@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     (r'^api/', include(v1_api.urls)),
 )
 
-urlpatterns+=patterns('freeform_data.views',
+urlpatterns += patterns('freeform_data.views',
       url(r'^login/$','login'),
       url(r'^logout/$','logout'),
 )
