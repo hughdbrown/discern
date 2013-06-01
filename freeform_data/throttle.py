@@ -6,6 +6,7 @@ from django.contrib.auth.models import User, SiteProfileNotAvailable
 import logging
 log = logging.getLogger(__name__)
 
+
 class UserAccessThrottle(CacheDBThrottle):
     """
     A throttling mechanism that uses the cache for actual throttling but
