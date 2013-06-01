@@ -174,7 +174,7 @@ def create_ml_essays_only(type, count, problem_resource_uri):
 def lookup_object(resource_uri):
     c = login()
     result = c.get(resource_uri,
-                        data={'format': 'json'}
+                  data={'format': 'json'}
                    )
     return json.loads(result.content)
 
