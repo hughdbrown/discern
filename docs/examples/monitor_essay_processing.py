@@ -15,7 +15,7 @@ def enumerate_grades(essaygrades_uri):
 	grade = json.loads(response.text)
 	print("\t confidence: {0}, score: {1}, type: {2} ".format(grade['confidence'], grade['target_scores'], grade['grader_type']))
 	return None
-	
+
 response = session.get(API_BASE_URL + "/essay_site/api/v1/essay/?format=json")
 essays  = json.loads(response.text)
 for e in essays['objects']:
