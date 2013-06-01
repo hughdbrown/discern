@@ -19,7 +19,7 @@ INSTALLED_APPS += ('django_nose',)
 NOSE_ARGS = [ '--with-xunit', '--with-coverage',
               '--cover-html-dir', 'cover',
              '--cover-package', 'freeform_data',
-             '--cover-package', 'ml_grading',]
+             '--cover-package', 'ml_grading', ]
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # Celery settings
@@ -28,7 +28,7 @@ CELERY_ALWAYS_EAGER = True
 BROKER_BACKEND = 'memory'
 
 # Haystack settings
-HAYSTACK_WHOOSH_PATH = os.path.join(ENV_ROOT,"whoosh_api_index_test")
+HAYSTACK_WHOOSH_PATH = os.path.join(ENV_ROOT, "whoosh_api_index_test")
 
 # Model settings
 MEMBERSHIP_LIMIT = 50  # For testing purposes, relax membership limits
