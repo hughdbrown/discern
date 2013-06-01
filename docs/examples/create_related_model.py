@@ -12,7 +12,7 @@ data = {
 }
 headers = {'content-type': 'application/json'}
 session = requests.session()
-response = session.post(login_url, data=json.dumps(data),headers=headers)
+response = session.post(login_url, data=json.dumps(data), headers=headers)
 
 # We want to create a course object and relate it to our organization object.
 # To do this, let's first find our organization object.
@@ -36,7 +36,7 @@ course_schema = json.loads(response.text)
 # this will show us what data we need to provide for each field
 for field in course_schema['fields'].keys():
     field_data = course_schema['fields'][field]
-    print "Name: {0} || Can be blank: {1} || Type: {2} || Help Text: {3}".format(field,field_data['nullable'],field_data['type'],field_data['help_text'])
+    print "Name: {0} || Can be blank: {1} || Type: {2} || Help Text: {3}".format(field, field_data['nullable'], field_data['type'], field_data['help_text'])
 
 # The fields id, created, and modified are automatically generated and we do not need to provide them.
 # Given this, we only need to provide the non-blank field course_name
