@@ -9,7 +9,7 @@ import requests
 import json
 import logging
 
-log= logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 
 class Rubric(models.Model):
@@ -31,7 +31,7 @@ class Rubric(models.Model):
         """
         scores = []
         all_scores = []
-        final_score=0
+        final_score = 0
         max_score = 0
         options = self.get_rubric_dict()
         for option in options:
@@ -41,10 +41,10 @@ class Rubric(models.Model):
             if option['selected']:
                 scores.append(option['option_points'])
 
-        if len(scores)>0:
+        if len(scores) > 0:
             final_score = sum(scores)
 
-        if len(all_scores)>0:
+        if len(all_scores) > 0:
             max_score = sum(all_scores)
 
         return {
@@ -131,13 +131,13 @@ def create_user_profile(sender, instance, created, **kwargs):
     status_code = 400
 
     # Try to create the user at the api
-    while status_code==400 and counter<2 and not instance.profile.api_user_created:
+    while status_code == 400 and counter < 2 and not instance.profile.api_user_created:
         try:
             # Post our information to try to create a user
             response = requests.post(create_user_url, data=json.dumps(data),headers=headers)
             status_code = response.status_code
             # If a user has been created, store the api key locally
-            if status_code==201:
+            if status_code == 201:
                 instance.profile.api_user_created = True
                 response_data = json.loads(response.content)
                 instance.profile.api_key = response_data['api_key']
@@ -146,7 +146,7 @@ def create_user_profile(sender, instance, created, **kwargs):
         except:
             log.exception("Could not create an API user!")
             instance.profile.save()
-        counter+=1
+        counter += 1
         # If we could not create a user in the first pass through the loop, add to the username to try to make it unique
         data['username'] += random.choice(string.digits + string.letters)
 
