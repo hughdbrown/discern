@@ -33,27 +33,27 @@ else:
     import mock_ml_grading
     grade = Mock(grade=mock_ml_grading.grade)
 
-#this is returned if the ML algorithm fails
+# this is returned if the ML algorithm fails
 RESULT_FAILURE_DICT={'success' : False, 'errors' : 'Errors!', 'confidence' : 0, 'feedback' : "", 'score' : 0}
 
 
 @transaction.commit_manually
 def handle_single_essay(essay):
-    #Needed to ensure that the DB is not wrapped in a transaction and pulls old data
+    # Needed to ensure that the DB is not wrapped in a transaction and pulls old data
     transaction.commit()
 
-    #strip out unicode and other characters in student response
-    #Needed, or grader may potentially fail
-    #TODO: Handle unicode in student responses properly
+    # strip out unicode and other characters in student response
+    # Needed, or grader may potentially fail
+    # TODO: Handle unicode in student responses properly
     student_response = essay.essay_text.encode('ascii', 'ignore')
 
-    #Gets both the max scores for each target and the number of targets
+    # Gets both the max scores for each target and the number of targets
     target_max_scores = json.loads(essay.problem.max_target_scores)
     target_counts = len(target_max_scores)
 
     target_scores=[]
     for m in xrange(0,target_counts):
-        #Gets latest model for a given problem and target
+        # Gets latest model for a given problem and target
         success, created_model=ml_grading_util.get_latest_created_model(essay.problem,m)
 
         if not success:
@@ -62,15 +62,15 @@ def handle_single_essay(essay):
             transaction.commit()
             return False, formatted_feedback
 
-        #Try to load the model file
+        # Try to load the model file
         success, grader_data=load_model_file(created_model,use_full_path=False)
         if success:
-            #Send to ML grading algorithm to be graded
+            # Send to ML grading algorithm to be graded
             results = grade.grade(grader_data, student_response)
         else:
             results=RESULT_FAILURE_DICT
 
-        #If the above fails, try using the full path in the created_model object
+        # If the above fails, try using the full path in the created_model object
         if not results['success'] and not created_model.model_stored_in_s3:
             try:
                 success, grader_data=load_model_file(created_model,use_full_path=True)
@@ -106,10 +106,10 @@ def handle_single_essay(essay):
     # Create grader object in controller by posting back results
     essay_grade = EssayGrade(**grader_dict)
     essay_grade.save()
-    #Update the essay so that it doesn't keep trying to re-grade
+    # Update the essay so that it doesn't keep trying to re-grade
     essay.has_been_ml_graded = True
     essay.save()
-    #copy permissions from the essay to the essaygrade
+    # copy permissions from the essay to the essaygrade
     helpers.copy_permissions(essay, Essay, essay_grade, EssayGrade)
     transaction.commit()
     return True, "Successfully scored!"
@@ -122,7 +122,7 @@ def load_model_file(created_model,use_full_path):
     use_full_path - boolean, indicates whether or not to use the full model path
     """
     try:
-        #Uses pickle to load a local file
+        # Uses pickle to load a local file
         if use_full_path:
             grader_data=pickle.load(file(created_model.model_full_path,"r"))
         else:
@@ -130,10 +130,10 @@ def load_model_file(created_model,use_full_path):
         return True, grader_data
     except:
         log.exception("Could not load model file.  This is okay.")
-        #Move on to trying S3
+        # Move on to trying S3
         pass
 
-    #If we cannot load the local file, look to the cloud
+    # If we cannot load the local file, look to the cloud
     try:
         r = requests.get(created_model.s3_public_url, timeout=2)
         grader_data=pickle.loads(r.text)
@@ -141,12 +141,12 @@ def load_model_file(created_model,use_full_path):
         log.exception("Problem with S3 connection.")
         return False, "Could not load."
 
-    #If we pulled down a file from the cloud, then store it locally for the future
+    # If we pulled down a file from the cloud, then store it locally for the future
     try:
         store_model_locally(created_model,grader_data)
     except:
         log.exception("Could not save model.  This is not a show-stopping error.")
-        #This is okay if it isn't possible to save locally
+        # This is okay if it isn't possible to save locally
         pass
 
     return True, grader_data
