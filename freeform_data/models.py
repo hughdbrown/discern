@@ -14,6 +14,7 @@ log=logging.getLogger(__name__)
 
 #CLASSES THAT WRAP CONSTANTS
 
+
 class UserRoles(object):
     student = "student"
     teacher = "teacher"
@@ -21,9 +22,11 @@ class UserRoles(object):
     grader = "grader"
     creator = "creator"
 
+
 class EssayTypes(object):
     test = "test"
     train = "train"
+
 
 class GraderTypes(object):
     machine = "ML"
@@ -49,6 +52,7 @@ PERMISSION_MODELS = ["organization", "membership", "userprofile", "course", "pro
 
 #MODELS
 
+
 class Organization(models.Model):
     #TODO: Add in address info, etc later on
     organization_size = models.IntegerField(default=0)
@@ -64,6 +68,7 @@ class Organization(models.Model):
         permissions = (
             ("view_organization", "Can view organization"),
         )
+
 
 class Membership(models.Model):
     role = models.CharField(max_length=20, default=UserRoles.student)
@@ -82,6 +87,7 @@ class Membership(models.Model):
             log.info(error_message)
             return error_message
         super(Membership, self).save(*args, **kwargs) # Call the "real" save() method.
+
 
 class UserProfile(models.Model):
     #TODO: Add in a callback where if user identifies as "administrator", then they can create an organization
@@ -102,6 +108,7 @@ class UserProfile(models.Model):
             ("view_userprofile", "Can view userprofile"),
         )
 
+
 class Course(models.Model):
     #A user can have many courses, and a course can have many users
     users = models.ManyToManyField(User)
@@ -117,6 +124,7 @@ class Course(models.Model):
         permissions = (
             ("view_course", "Can view course"),
         )
+
 
 class Problem(models.Model):
     #A course has many problems, and a problem can be used in many courses
@@ -138,6 +146,7 @@ class Problem(models.Model):
         permissions = (
             ("view_problem", "Can view problem"),
         )
+
 
 class Essay(models.Model):
     #Each essay is written for a specific problem
@@ -164,6 +173,7 @@ class Essay(models.Model):
         permissions = (
             ("view_essay", "Can view essay"),
         )
+
 
 class EssayGrade(models.Model):
     #Each essaygrade is for a specific essay
@@ -203,6 +213,7 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         profile, created = UserProfile.objects.get_or_create(user=instance)
 
+
 def pre_delete_problem(sender, instance, **kwargs):
     """
     Deletes essays associated with a problem when it is deleted
@@ -210,12 +221,14 @@ def pre_delete_problem(sender, instance, **kwargs):
     essays = Essay.objects.filter(problem=instance)
     essays.delete()
 
+
 def pre_delete_essay(sender, instance, **kwargs):
     """
     Deletes essay grades associated with an essay when it is deleted
     """
     essay_grades = EssayGrade.objects.filter(essay=instance)
     essay_grades.delete()
+
 
 def pre_delete_essaygrade(sender,instance, **kwargs):
     """
@@ -226,6 +239,7 @@ def pre_delete_essaygrade(sender,instance, **kwargs):
     if ml_graded_count<=1:
         essay.has_been_ml_graded=False
         essay.save()
+
 
 def pre_delete_user(sender,instance,**kwargs):
     """
@@ -242,6 +256,7 @@ def pre_delete_user(sender,instance,**kwargs):
     essays.update(user=None)
     essay_grades.update(user=None)
 
+
 def add_user_to_groups(sender,instance,**kwargs):
     user = instance.user
     org = instance.organization
@@ -254,6 +269,7 @@ def add_user_to_groups(sender,instance,**kwargs):
     user.groups.add(group)
     user.save()
 
+
 def remove_user_from_groups(sender,instance,**kwargs):
     user = instance.user
     org = instance.organization
@@ -261,9 +277,11 @@ def remove_user_from_groups(sender,instance,**kwargs):
     user.groups.filter(name=group_name).delete()
     user.save()
 
+
 def get_group_name(membership):
     group_name = "{0}_{1}".format(membership.organization.id,membership.role)
     return group_name
+
 
 def add_creator_permissions(sender, instance, **kwargs):
     try:
