@@ -162,7 +162,7 @@ def store_model_locally(created_model, results):
     full_model_path = os.path.join(settings.ML_MODEL_PATH, relative_model_path)
     try:
         ml_grading_util.dump_model_to_file(results['prompt'], results['extractor'],
-            results['model'], results['text'], results['score'], full_model_path)
+                                           results['model'], results['text'], results['score'], full_model_path)
     except:
         error_message = "Could not save model to file."
         log.exception(error_message)
