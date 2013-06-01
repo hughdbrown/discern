@@ -52,9 +52,9 @@ def handle_single_essay(essay):
     target_counts = len(target_max_scores)
 
     target_scores = []
-    for m in xrange(0,target_counts):
+    for m in xrange(0, target_counts):
         # Gets latest model for a given problem and target
-        success, created_model = ml_grading_util.get_latest_created_model(essay.problem,m)
+        success, created_model = ml_grading_util.get_latest_created_model(essay.problem, m)
 
         if not success:
             results = RESULT_FAILURE_DICT
@@ -63,7 +63,7 @@ def handle_single_essay(essay):
             return False, formatted_feedback
 
         # Try to load the model file
-        success, grader_data = load_model_file(created_model,use_full_path=False)
+        success, grader_data = load_model_file(created_model, use_full_path=False)
         if success:
             # Send to ML grading algorithm to be graded
             results = grade.grade(grader_data, student_response)
@@ -73,7 +73,7 @@ def handle_single_essay(essay):
         # If the above fails, try using the full path in the created_model object
         if not results['success'] and not created_model.model_stored_in_s3:
             try:
-                success, grader_data = load_model_file(created_model,use_full_path=True)
+                success, grader_data = load_model_file(created_model, use_full_path=True)
                 if success:
                     results = grade.grade(grader_data, student_response)
                 else:
@@ -99,7 +99,7 @@ def handle_single_essay(essay):
         'feedback' : '',
         'annotated_text' : '',
         'premium_feedback_scores' : json.dumps([]),
-        'success' :final_results['success'],
+        'success' : final_results['success'],
         'confidence' : final_results['confidence'],
         }
 
@@ -115,7 +115,7 @@ def handle_single_essay(essay):
     return True, "Successfully scored!"
 
 
-def load_model_file(created_model,use_full_path):
+def load_model_file(created_model, use_full_path):
     """
     Tries to load a model file
     created_model - instance of CreatedModel (django model)
@@ -124,9 +124,9 @@ def load_model_file(created_model,use_full_path):
     try:
         # Uses pickle to load a local file
         if use_full_path:
-            grader_data = pickle.load(file(created_model.model_full_path,"r"))
+            grader_data = pickle.load(file(created_model.model_full_path, "r"))
         else:
-            grader_data = pickle.load(file(os.path.join(settings.ML_MODEL_PATH,created_model.model_relative_path),"r"))
+            grader_data = pickle.load(file(os.path.join(settings.ML_MODEL_PATH, created_model.model_relative_path), "r"))
         return True, grader_data
     except:
         log.exception("Could not load model file.  This is okay.")
@@ -143,7 +143,7 @@ def load_model_file(created_model,use_full_path):
 
     # If we pulled down a file from the cloud, then store it locally for the future
     try:
-        store_model_locally(created_model,grader_data)
+        store_model_locally(created_model, grader_data)
     except:
         log.exception("Could not save model.  This is not a show-stopping error.")
         # This is okay if it isn't possible to save locally
@@ -152,17 +152,17 @@ def load_model_file(created_model,use_full_path):
     return True, grader_data
 
 
-def store_model_locally(created_model,results):
+def store_model_locally(created_model, results):
     """
     Saves a model to a local file.
     created_model - instance of CreatedModel (django model)
     results - result dictionary to save
     """
     relative_model_path = created_model.model_relative_path
-    full_model_path = os.path.join(settings.ML_MODEL_PATH,relative_model_path)
+    full_model_path = os.path.join(settings.ML_MODEL_PATH, relative_model_path)
     try:
         ml_grading_util.dump_model_to_file(results['prompt'], results['extractor'],
-            results['model'], results['text'],results['score'],full_model_path)
+            results['model'], results['text'], results['score'], full_model_path)
     except:
         error_message = "Could not save model to file."
         log.exception(error_message)
