@@ -1,5 +1,5 @@
 '''
-Tutorial - This script inspects ease's progress grading essays. 
+Tutorial - This script inspects ease's progress grading essays.
 The assumption is that the populate_essays.py script has been run.
 '''
 
