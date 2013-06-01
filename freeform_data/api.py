@@ -80,7 +80,7 @@ def default_throttling():
     return UserAccessThrottle(throttle_at=settings.THROTTLE_AT, timeframe=settings.THROTTLE_TIMEFRAME, expiration= settings.THROTTLE_EXPIRATION)
 
 
-def run_search(request,obj):
+def run_search(request, obj):
     """
     Runs a search via haystack.
     request - user search request object
@@ -101,7 +101,7 @@ class MockQuerySet(Iterator):
     """
     Mock a query set so that it can be used with default authorization
     """
-    def __init__(self, model,data):
+    def __init__(self, model, data):
         """
         model - a model class
         data - list of data to hold in the mock query set
@@ -144,7 +144,7 @@ class SearchModelResource(ModelResource):
         self.throttle_check(request)
 
         # Run search via haystack and get list of objects
-        object_list = run_search(request,self._meta.model_type)
+        object_list = run_search(request, self._meta.model_type)
         objects = []
 
         # Create bundle and authorization
@@ -161,7 +161,7 @@ class SearchModelResource(ModelResource):
             bundle = self.full_dehydrate(bundle)
 
             # Apply authorization limits via auth object that we previously created
-            object_list = auth.read_list(MockQuerySet(self._meta.model_type, object_list),bundle)
+            object_list = auth.read_list(MockQuerySet(self._meta.model_type, object_list), bundle)
 
         for result in object_list:
             bundle = self.build_bundle(obj=result, request=request)
@@ -258,7 +258,7 @@ class OrganizationResource(SearchModelResource):
         bundle = super(OrganizationResource, self).obj_create(bundle)
         return bundle
 
-    def save_m2m(self,bundle):
+    def save_m2m(self, bundle):
         """
         Save_m2m saves many to many models.  This hack adds a membership object, which is needed, as membership
         is the relation through which organization is connected to user.
@@ -299,7 +299,7 @@ class UserProfileResource(SearchModelResource):
         throttle = default_throttling()
 
     def obj_create(self, bundle, request=None, **kwargs):
-        return super(UserProfileResource, self).obj_create(bundle,user=bundle.request.user)
+        return super(UserProfileResource, self).obj_create(bundle, user=bundle.request.user)
 
 
 class UserResource(SearchModelResource):
@@ -352,7 +352,7 @@ class MembershipResource(SearchModelResource):
         throttle = default_throttling()
 
     def obj_create(self, bundle, request=None, **kwargs):
-        return super(MembershipResource, self).obj_create(bundle,user=bundle.request.user)
+        return super(MembershipResource, self).obj_create(bundle, user=bundle.request.user)
 
 
 class CourseResource(SearchModelResource):
@@ -455,7 +455,7 @@ class EssayGradeResource(SearchModelResource):
         return bundle
 
 
-def add_membership(user,organization):
+def add_membership(user, organization):
     """
     Adds a membership object.  Required because membership defines the relation between user and organization,
     and tastypie does not automatically create through relations.
