@@ -16,14 +16,14 @@ response = login_to_discern(session)
 def add_problem(the_prompt, the_class):
     uri = None
     problem_response = session.post(API_BASE_URL + "/essay_site/api/v1/problem/?format=json",
-            data=json.dumps({ "name": "movie question", "courses": [the_class],
+            data=json.dumps({"name": "movie question", "courses": [the_class],
                     "prompt": the_prompt, "max_target_scores": json.dumps([10000])}), headers=headers)
     if problem_response.status_code >= 400:
         print ("Problem creation failure.")
         pprint("status: {0} msg: {1}".format(
                         problem_response.status_code,
                         problem_response._content))
-        pprint (vars( problem_response.request))
+        pprint (vars(problem_response.request))
         exit(1)
     problem_object = json.loads(problem_response.text)
     return problem_object['resource_uri']
@@ -46,7 +46,7 @@ def add_score(the_essay_uri, the_score):
         pprint("status: {0} msg: {1}".format(
                 score_response.status_code,
                 score_response._content))
-        pprint (vars( score_response.request))
+        pprint (vars(score_response.request))
         exit(1)
     # GradeEssay doesn't have a resource_uri field
     return None
@@ -68,7 +68,7 @@ def add_essay(the_text, the_problem_uri):
         pprint("status: {0} msg: {1}".format(
                 essay_response.status_code,
                 essay_response._content))
-        pprint (vars( essay_response.request))
+        pprint (vars(essay_response.request))
         exit(1)
     essay_object = json.loads(essay_response.text)
     uri = essay_object['resource_uri']
