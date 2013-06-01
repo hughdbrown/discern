@@ -16,8 +16,8 @@ response = login_to_discern(session)
 def add_problem(the_prompt, the_class):
     uri = None
     problem_response = session.post(API_BASE_URL + "/essay_site/api/v1/problem/?format=json",
-            data=json.dumps({ "name": "movie question", "courses" :[the_class],
-                    "prompt": the_prompt,"max_target_scores": json.dumps([10000])}), headers=headers)
+            data=json.dumps({ "name": "movie question", "courses" : [the_class],
+                    "prompt": the_prompt, "max_target_scores": json.dumps([10000])}), headers=headers)
     if problem_response.status_code >= 400:
         print ("Problem creation failure.")
         pprint("status: {0} msg: {1}".format(
