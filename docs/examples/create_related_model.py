@@ -7,8 +7,8 @@ from common_settings import *
 # This is the same login code that we used previously
 login_url = API_BASE_URL + "/essay_site/login/"
 data = {
-    'username' : 'test',
-    'password' : 'test'
+    'username': 'test',
+    'password': 'test'
 }
 headers = {'content-type': 'application/json'}
 session = requests.session()
@@ -41,7 +41,7 @@ for field in course_schema['fields'].keys():
 # The fields id, created, and modified are automatically generated and we do not need to provide them.
 # Given this, we only need to provide the non-blank field course_name
 # However, since we want to link to our organization, let's also add that in.
-course = {'course_name' : 'Test Course', 'organizations' : [organization_resource_uri]}
+course = {'course_name': 'Test Course', 'organizations': [organization_resource_uri]}
 headers = {'content-type': 'application/json'}
 
 # This will create our new course object using our name and organizations
