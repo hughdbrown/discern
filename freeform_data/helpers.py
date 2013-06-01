@@ -17,7 +17,7 @@ def get_content_type(model):
 def get_object_permissions(instance, model):
     content_type = get_content_type(model)
     content_id = content_type.id
-    permissions = UserObjectPermission.objects.filter(content_type=content_id, object_pk = instance.pk)
+    permissions = UserObjectPermission.objects.filter(content_type=content_id, object_pk=instance.pk)
     return permissions
 
 
