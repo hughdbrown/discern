@@ -6,7 +6,7 @@ import django
 from django.conf import settings
 try:
     from django.conf.urls import patterns, url
-except ImportError: # Django < 1.4
+except ImportError:  # Django < 1.4
     from django.conf.urls.defaults import patterns, url
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned, ValidationError
 from django.core.urlresolvers import NoReverseMatch, reverse, resolve, Resolver404, get_script_prefix
@@ -2426,7 +2426,7 @@ class ModelResource(Resource):
                     objects_saved=bundle.objects_saved
                 )
 
-                #Only save related models if they're newly added.
+                # Only save related models if they're newly added.
                 if updated_related_bundle.obj._state.adding:
                     related_resource.save(updated_related_bundle)
                 related_objs.append(updated_related_bundle.obj)
