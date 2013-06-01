@@ -40,7 +40,7 @@ class SlumberModel(object):
     # These are not required fields, so don't advertise them as such
     excluded_fields = ['created', 'id', 'resource_uri', 'id', 'modified']
 
-    def __init__(self,api_url, model_type, api_auth):
+    def __init__(self, api_url, model_type, api_auth):
         """
         api_url - the base url for the api (settings.FULL_API_START)
         model_type - the type of model to encapsulate (ie 'organization')
@@ -57,7 +57,7 @@ class SlumberModel(object):
         Gets the start of the slumber model path for an api resource
         """
         # In slumber, the base slumber.API has attributes for each model at the endpoint
-        ref = getattr(self.api,self.model_type)
+        ref = getattr(self.api, self.model_type)
         if id is not None:
             # If we are referencing a specific model id, add it into the base
             ref = ref(id)
@@ -123,20 +123,20 @@ class SlumberModel(object):
         self.objects.append(new)
         return new
 
-    def find_model_by_id(self,id):
+    def find_model_by_id(self, id):
         """
         Find a model given its id
         id - int
         """
         match = None
-        for i in xrange(0,len(self.objects)):
+        for i in xrange(0, len(self.objects)):
             loop_obj = self.objects[i]
             if int(loop_obj['id']) == id:
                 match = i
                 break
         return match
 
-    def delete(self,id = None, data = None, **kwargs):
+    def delete(self, id = None, data = None, **kwargs):
         """
         Delete a given instance of a model
         id - int, instance to delete
@@ -211,7 +211,7 @@ class SlumberModelDiscovery(object):
     """
     A class the auto-discovers slumber models by checking the api
     """
-    def __init__(self,api_url, api_auth):
+    def __init__(self, api_url, api_auth):
         """
         api_url - the base url for the api.  See settings.FULL_API_START.
         api_auth - api auth dict.  See UserProfile.get_api_auth
