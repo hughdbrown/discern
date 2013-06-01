@@ -4,11 +4,13 @@ from guardian.core import ObjectPermissionChecker
 import logging
 log = logging.getLogger(__name__)
 
+
 def check_permissions(permission_type,user,obj):
     checker = ObjectPermissionChecker(user)
     class_lower_name = obj.__class__.__name__.lower()
     perm = '{0}_{1}'.format(permission_type, class_lower_name)
     return checker.has_perm(perm,obj)
+
 
 class GuardianAuthorization(Authorization):
     """
