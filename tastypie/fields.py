@@ -736,6 +736,7 @@ class ToOneField(RelatedField):
 
         return self.build_related_resource(value, request=bundle.request)
 
+
 class ForeignKey(ToOneField):
     """
     A convenience subclass for those who prefer to mirror ``django.db.models``.
