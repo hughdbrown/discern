@@ -77,7 +77,7 @@ def default_throttling():
     """
     Default throttling for models.  Currently only affects essay model.
     """
-    return UserAccessThrottle(throttle_at=settings.THROTTLE_AT, timeframe=settings.THROTTLE_TIMEFRAME, expiration= settings.THROTTLE_EXPIRATION)
+    return UserAccessThrottle(throttle_at=settings.THROTTLE_AT, timeframe=settings.THROTTLE_TIMEFRAME, expiration=settings.THROTTLE_EXPIRATION)
 
 
 def run_search(request, obj):
@@ -467,8 +467,8 @@ def add_membership(user, organization):
         log.info(error_message)
         raise BadRequest(error_message)
     membership = Membership(
-        user = user,
-        organization = organization,
+        user=user,
+        organization=organization,
     )
     if users.count() == 0:
         # If a user is the first one in an organization, make them the administrator.
