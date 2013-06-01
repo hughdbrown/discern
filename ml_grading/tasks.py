@@ -54,7 +54,7 @@ def grade_ml():
     and then calls the ml grader if there are.
     """
     transaction.commit_unless_managed()
-    #TODO: Add in some checking to ensure that count is of instructor graded essays only
+    # TODO: Add in some checking to ensure that count is of instructor graded essays only
     problems = Problem.objects.all().annotate(essay_count=Count('essay')).filter(essay_count__gt=(MIN_ESSAYS_TO_TRAIN_WITH-1))
     for problem in problems:
         grade_ml_essays(problem)
@@ -72,7 +72,7 @@ def grade_ml_essays(problem):
     if acquire_lock():
         try:
             essays = Essay.objects.filter(problem=problem, has_been_ml_graded=False)
-            #TODO: Grade essays in batches so ml model doesn't have to be loaded every single time (or cache the model files)
+            # TODO: Grade essays in batches so ml model doesn't have to be loaded every single time (or cache the model files)
             for essay in essays:
                 handle_single_essay(essay)
         finally:
