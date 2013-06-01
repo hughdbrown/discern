@@ -35,7 +35,7 @@ if course_response.status_code >= 400:
     pprint("status: {0} msg: {1}".format(
             course_response.status_code,
             course_response._content))
-    pprint (vars( course_response.request))
+    pprint (vars(course_response.request))
     exit(1)
 
 course_uri = course_object['resource_uri']
