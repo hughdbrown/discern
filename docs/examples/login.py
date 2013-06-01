@@ -10,8 +10,8 @@ login_url = API_BASE_URL + "/essay_site/login/"
 
 # These are the credentials that we created in the previous example.
 data = {
-    'username' : 'test',
-    'password' : 'test'
+    'username': 'test',
+    'password': 'test'
 }
 
 # We need to explicitly define the content type to let the API know how to decode the data we are sending.
