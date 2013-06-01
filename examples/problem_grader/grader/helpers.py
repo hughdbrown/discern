@@ -4,7 +4,7 @@ import logging
 from django.conf import settings
 from slumber_models import SlumberModelDiscovery
 
-log=logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 
 def get_rubric_data(model, slumber_data):
@@ -14,7 +14,7 @@ def get_rubric_data(model, slumber_data):
     slumber_data - a dict returned by slumber from the api
     """
     # Extract the problem id
-    if model=="problem":
+    if model == "problem":
         problem_id = slumber_data['id']
     else:
         problem_id = slumber_data['problem'].split('/')[5]
