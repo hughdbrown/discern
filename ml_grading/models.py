@@ -5,6 +5,7 @@ import json
 CHARFIELD_LEN_SMALL=128
 CHARFIELD_LEN_LONG = 1024
 
+
 class CreatedModel(models.Model):
     #When it was created/modified
     modified=models.DateTimeField(auto_now=True)
