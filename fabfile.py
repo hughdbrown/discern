@@ -43,7 +43,7 @@ logging.basicConfig(level=logging.ERROR)
 env.forward_agent = True
 
 # This makes the paramiko logger less verbose
-para_log=logging.getLogger('paramiko.transport')
+para_log = logging.getLogger('paramiko.transport')
 para_log.setLevel(logging.ERROR)
 
 # Use the below setting to pick the remote host that you want to deploy to.
