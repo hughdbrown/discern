@@ -14,11 +14,11 @@ from unicodedata import category
 
 valid_jsid_categories_start = frozenset([
     'Lu', 'Ll', 'Lt', 'Lm', 'Lo', 'Nl'
-    ])
+])
 
 valid_jsid_categories = frozenset([
     'Lu', 'Ll', 'Lt', 'Lm', 'Lo', 'Nl', 'Mn', 'Mc', 'Nd', 'Pc'
-    ])
+])
 
 valid_jsid_chars = ('$', '_')
 
@@ -49,7 +49,7 @@ is_reserved_js_word = frozenset([
     # potentially reserved in a future version of the ES5 standard
     # 'let', 'yield'
 
-    ]).__contains__
+]).__contains__
 
 # ------------------------------------------------------------------------------
 # the core validation functions
