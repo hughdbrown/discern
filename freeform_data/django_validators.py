@@ -22,11 +22,11 @@ class JSONListValidator(object):
         if message is not None:
             self.message = message
 
-        #If we have a matching_list_len, use it
+        # If we have a matching_list_len, use it
         if matching_list_len is not None and isinstance(matching_list_len, int):
             self.matching_list_len = matching_list_len
 
-        #If we have a matching_list, use it.
+        # If we have a matching_list, use it.
         if self.matching_list is not None:
             try:
                 self.matching_list = json.loads(self.matching_list)
@@ -41,32 +41,32 @@ class JSONListValidator(object):
         value - A python list or json encoded list
         """
 
-        #Try to load the json
+        # Try to load the json
         try:
             value = json.loads(value)
         except Exception:
             pass
 
-        #Value must be a list!
+        # Value must be a list!
         if not isinstance(value,list):
             error_message = "You entered a non-list entry for value, or entered bad json. {0}".format(value)
             raise ValidationError(error_message)
 
         value_len = len(value)
 
-        #Each value must be an integer
+        # Each value must be an integer
         for val in value:
             if not isinstance(val,int):
                 error_message="You entered a non-integer value in your score list. {0}".format(value)
                 raise ValidationError(error_message)
 
-        #Validate the lengths to ensure they match
+        # Validate the lengths to ensure they match
         if self.matching_list_len is not None:
             if self.matching_list_len!=value_len:
                 error_message = "You entered more target scores than exist in the corresponding maximum list in the problem.  {0} vs {1}".format(value_len, self.matching_list_len)
                 raise ValidationError(error_message)
 
-        #Validate each value to make sure it is less than the max allowed.
+        # Validate each value to make sure it is less than the max allowed.
         if self.matching_list is not None:
             for i in xrange(0,self.matching_list_len):
                 if value[i]>self.matching_list[i]:
