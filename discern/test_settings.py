@@ -16,7 +16,7 @@ DATABASES = {
 
 # Nose Test Runner
 INSTALLED_APPS += ('django_nose',)
-NOSE_ARGS = [ '--with-xunit', '--with-coverage',
+NOSE_ARGS = ['--with-xunit', '--with-coverage',
               '--cover-html-dir', 'cover',
              '--cover-package', 'freeform_data',
              '--cover-package', 'ml_grading', ]
