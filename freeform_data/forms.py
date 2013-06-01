@@ -33,7 +33,7 @@ class EssayForm(forms.Form):
     def __init__(self, problem_object=None, **kwargs):
         super(EssayForm, self).__init__(**kwargs)
         if problem_object is not None:
-            self.add_pred_length = problem_object.get('number_of_additional_predictors',0)
+            self.add_pred_length = problem_object.get('number_of_additional_predictors', 0)
         else:
             self.add_pred_length = 0
 
@@ -56,7 +56,7 @@ class EssayGradeForm(forms.Form):
         super(EssayGradeForm, self).__init__(**kwargs)
         self.max_target_scores = None
         if problem_object is not None:
-            self.max_target_scores = problem_object.get('max_target_scores',None)
+            self.max_target_scores = problem_object.get('max_target_scores', None)
 
         validator = django_validators.JSONListValidator(matching_list=self.max_target_scores)
 
