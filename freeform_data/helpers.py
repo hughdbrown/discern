@@ -35,7 +35,7 @@ def copy_permissions(base_instance, base_model, new_instance, new_model):
             'content_type': content_type,
             'permission': permission_obj,
             'object_pk': object_pk,
-            }
+        }
         perm, created = UserObjectPermission.objects.get_or_create(**perm_dict)
 
 
