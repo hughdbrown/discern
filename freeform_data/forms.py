@@ -8,6 +8,7 @@ from models import ESSAY_TYPES, GRADER_TYPES
 
 log = logging.getLogger(__name__)
 
+
 class ProblemForm(forms.Form):
     """
     A form to validate Problem resources
@@ -20,6 +21,7 @@ class ProblemForm(forms.Form):
         super(ProblemForm, self).__init__(**kwargs)
         validator = django_validators.JSONListValidator()
         self.fields['max_target_scores'] = fields.JSONListField(required=True, validators=[validator])
+
 
 class EssayForm(forms.Form):
     """
@@ -38,6 +40,7 @@ class EssayForm(forms.Form):
         validator = django_validators.JSONListValidator(matching_list_len=self.add_pred_length)
 
         self.fields['additional_predictors'] = fields.JSONListField(required = False, validators=[validator])
+
 
 class EssayGradeForm(forms.Form):
     """
@@ -58,6 +61,7 @@ class EssayGradeForm(forms.Form):
         validator = django_validators.JSONListValidator(matching_list=self.max_target_scores)
 
         self.fields['target_scores'] = fields.JSONListField(required = True, validators=[validator])
+
 
 class UserForm(forms.Form):
     """
