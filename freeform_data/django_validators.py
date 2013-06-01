@@ -11,7 +11,7 @@ class JSONListValidator(object):
     """
     message = _('Invalid Json List.')
 
-    def __init__(self, matching_list=None, message=None, matching_list_len = None):
+    def __init__(self, matching_list=None, message=None, matching_list_len=None):
         """
         matching_list - the list to match the input values with.  For example, if we are comparing input target values with max target values from the problem object.
         matching_list_len - Used when we only want to match length.
