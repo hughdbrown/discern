@@ -11,8 +11,8 @@ response = login_to_discern(session)
 
 # create an organization
 org_response = session.post(API_BASE_URL + "/essay_site/api/v1/organization/?format=json",
-        data=json.dumps({"organization_name": "Reddit"}),
-    headers=headers)
+                            data=json.dumps({"organization_name": "Reddit"}),
+                            headers=headers)
 
 # get the URI for the organization
 #    Let's get the text of the response
@@ -22,7 +22,7 @@ organization_resource_uri = organization_object['resource_uri']
 
 # create a course and associate it with the organization
 course_response = session.post(API_BASE_URL + "/essay_site/api/v1/course/?format=json",
-        data=json.dumps(
+                               data=json.dumps(
     {"course_name": "Discern Tutorial",
      "organizations": [organization_resource_uri]
                  }),
