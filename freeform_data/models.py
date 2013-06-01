@@ -60,7 +60,7 @@ class Organization(models.Model):
     # TODO: Add in billing details, etc later, along with rules on when to ask
     premium_service_subscriptions = models.TextField(default=json.dumps([]))
     # Each organization can have many users, and a user can be in multiple organizations
-    users = models.ManyToManyField(User, blank=True,null=True, through="freeform_data.Membership")
+    users = models.ManyToManyField(User, blank=True, null=True, through="freeform_data.Membership")
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
@@ -92,15 +92,15 @@ class Membership(models.Model):
 class UserProfile(models.Model):
     # TODO: Add in a callback where if user identifies as "administrator", then they can create an organization
     # Each userprofile has one user, and vice versa
-    user = models.OneToOneField(User, unique=True, blank=True,null=True)
+    user = models.OneToOneField(User, unique=True, blank=True, null=True)
     # TODO: Potentially support users being in multiple orgs, but will be complicated
     # Add in userinfo here.  Location, etc
-    name = models.TextField(blank=True,null=True)
+    name = models.TextField(blank=True, null=True)
     # User role in their organization
-    role = models.CharField(max_length=20,blank=True,null=True)
+    role = models.CharField(max_length=20, blank=True, null=True)
     throttle_at = models.IntegerField(default=0)
 
-    created = models.DateTimeField(auto_now_add=True,blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     modified = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     class Meta:
@@ -191,9 +191,9 @@ class EssayGrade(models.Model):
     # whether or not the grader succeeded
     success = models.BooleanField()
     # For peer grading and staff grading, we will use this
-    user = models.ForeignKey(User,blank=True,null=True)
+    user = models.ForeignKey(User, blank=True, null=True)
     # Confidence value from the grader
-    confidence = models.DecimalField(max_digits=10,decimal_places=9, default=1)
+    confidence = models.DecimalField(max_digits=10, decimal_places=9, default=1)
 
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -230,7 +230,7 @@ def pre_delete_essay(sender, instance, **kwargs):
     essay_grades.delete()
 
 
-def pre_delete_essaygrade(sender,instance, **kwargs):
+def pre_delete_essaygrade(sender, instance, **kwargs):
     """
     Ensures that an ML model will be retrained if an old ML scored grade is removed for some reason
     """
@@ -241,7 +241,7 @@ def pre_delete_essaygrade(sender,instance, **kwargs):
         essay.save()
 
 
-def pre_delete_user(sender,instance,**kwargs):
+def pre_delete_user(sender, instance, **kwargs):
     """
     Removes the user's profile and removes foreign key relations from objects
     """
@@ -257,7 +257,7 @@ def pre_delete_user(sender,instance,**kwargs):
     essay_grades.update(user=None)
 
 
-def add_user_to_groups(sender,instance,**kwargs):
+def add_user_to_groups(sender, instance, **kwargs):
     user = instance.user
     org = instance.organization
     group_name = get_group_name(instance)
@@ -270,7 +270,7 @@ def add_user_to_groups(sender,instance,**kwargs):
     user.save()
 
 
-def remove_user_from_groups(sender,instance,**kwargs):
+def remove_user_from_groups(sender, instance, **kwargs):
     user = instance.user
     org = instance.organization
     group_name = get_group_name(instance)
@@ -279,7 +279,7 @@ def remove_user_from_groups(sender,instance,**kwargs):
 
 
 def get_group_name(membership):
-    group_name = "{0}_{1}".format(membership.organization.id,membership.role)
+    group_name = "{0}_{1}".format(membership.organization.id, membership.role)
     return group_name
 
 
@@ -306,9 +306,9 @@ post_save.connect(create_api_key, sender=User)
 post_save.connect(add_user_to_groups, sender=Membership)
 post_save.connect(add_creator_permissions)
 
-pre_delete.connect(pre_delete_problem,sender=Problem)
-pre_delete.connect(pre_delete_essay,sender=Essay)
-pre_delete.connect(pre_delete_essaygrade,sender=EssayGrade)
+pre_delete.connect(pre_delete_problem, sender=Problem)
+pre_delete.connect(pre_delete_essay, sender=Essay)
+pre_delete.connect(pre_delete_essaygrade, sender=EssayGrade)
 pre_delete.connect(pre_delete_user, sender=User)
 pre_delete.connect(remove_user_from_groups, sender=Membership)
 
