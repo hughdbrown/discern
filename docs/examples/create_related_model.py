@@ -54,4 +54,3 @@ response = session.get(API_BASE_URL + "/essay_site/api/v1/course/?format=json")
 response_text = json.loads(response.text)
 course_object = response_text["objects"][0]
 print course_object
-
