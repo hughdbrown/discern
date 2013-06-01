@@ -37,7 +37,7 @@ except NameError:
 # is safe to use the native python copy module.
 # The ``copy`` module became function-friendly in Python 2.5 and
 # ``copycompat`` was added in post 1.1.1 Django (r11901)..
-if sys.version_info >= (2,5):
+if sys.version_info >= (2, 5):
     try:
         from copy import deepcopy
     except ImportError:
