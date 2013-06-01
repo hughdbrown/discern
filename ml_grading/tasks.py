@@ -15,7 +15,7 @@ from django.db import transaction
 from freeform_data.tasks import single_instance_task
 from django.core.cache import cache
 
-log=logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 
 @periodic_task(run_every=timedelta(seconds=settings.TIME_BETWEEN_ML_CREATOR_CHECKS))
@@ -55,7 +55,7 @@ def grade_ml():
     """
     transaction.commit_unless_managed()
     # TODO: Add in some checking to ensure that count is of instructor graded essays only
-    problems = Problem.objects.all().annotate(essay_count=Count('essay')).filter(essay_count__gt=(MIN_ESSAYS_TO_TRAIN_WITH -1))
+    problems = Problem.objects.all().annotate(essay_count=Count('essay')).filter(essay_count__gt=(MIN_ESSAYS_TO_TRAIN_WITH - 1))
     for problem in problems:
         grade_ml_essays(problem)
 
