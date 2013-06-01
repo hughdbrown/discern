@@ -34,7 +34,7 @@ else:
     grade = Mock(grade=mock_ml_grading.grade)
 
 # this is returned if the ML algorithm fails
-RESULT_FAILURE_DICT = {'success' : False, 'errors' : 'Errors!', 'confidence' : 0, 'feedback' : "", 'score' : 0}
+RESULT_FAILURE_DICT = {'success': False, 'errors': 'Errors!', 'confidence': 0, 'feedback': "", 'score': 0}
 
 
 @transaction.commit_manually
@@ -93,14 +93,14 @@ def handle_single_essay(essay):
         target_scores.append(int(results['score']))
 
     grader_dict = {
-        'essay' : essay,
-        'target_scores' : json.dumps(target_scores),
-        'grader_type' : GraderTypes.machine,
-        'feedback' : '',
-        'annotated_text' : '',
-        'premium_feedback_scores' : json.dumps([]),
-        'success' : final_results['success'],
-        'confidence' : final_results['confidence'],
+        'essay': essay,
+        'target_scores': json.dumps(target_scores),
+        'grader_type': GraderTypes.machine,
+        'feedback': '',
+        'annotated_text': '',
+        'premium_feedback_scores': json.dumps([]),
+        'success': final_results['success'],
+        'confidence': final_results['confidence'],
         }
 
     # Create grader object in controller by posting back results
