@@ -154,7 +154,7 @@ class ApiField(object):
         """
         if self.readonly:
             return None
-        if not bundle.data.has_key(self.instance_name):
+        if self.instance_name not in bundle.data:
             if getattr(self, 'is_related', False) and not getattr(self, 'is_m2m', False):
                 # We've got an FK (or alike field) & a possible parent object.
                 # Check for it.
