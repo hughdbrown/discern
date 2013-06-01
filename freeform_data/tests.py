@@ -255,6 +255,7 @@ class OrganizationTest(unittest.TestCase, GenericTest):
 class CourseTest(unittest.TestCase, GenericTest):
     type="course"
     object = {'course_name' : "edx_test"}
+
     def setUp(self):
         self.generic_setup()
 
@@ -271,6 +272,7 @@ class ProblemTest(unittest.TestCase, GenericTest):
 
 class EssayTest(unittest.TestCase, GenericTest):
     type="essay"
+
     def setUp(self):
         self.generic_setup()
         self.create_object()
@@ -281,6 +283,7 @@ class EssayTest(unittest.TestCase, GenericTest):
 
 class EssayGradeTest(unittest.TestCase, GenericTest):
     type="essaygrade"
+
     def setUp(self):
         self.generic_setup()
         self.create_object()
@@ -291,6 +294,7 @@ class EssayGradeTest(unittest.TestCase, GenericTest):
 
 class CreateUserTest(unittest.TestCase):
     type = "createuser"
+
     def setUp(self):
         """
         This is a special model to create users, so it doesn't inherit from generic
