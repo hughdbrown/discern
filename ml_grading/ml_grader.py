@@ -101,7 +101,7 @@ def handle_single_essay(essay):
         'premium_feedback_scores': json.dumps([]),
         'success': final_results['success'],
         'confidence': final_results['confidence'],
-        }
+    }
 
     # Create grader object in controller by posting back results
     essay_grade = EssayGrade(**grader_dict)
