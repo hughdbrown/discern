@@ -114,11 +114,11 @@ class MockQuerySet(Iterator):
         """
         Fetches the next element in the mock query set
         """
-        if self.current_elem>=len(self.data):
-            self.current_elem=0
+        if self.current_elem >= len(self.data):
+            self.current_elem = 0
             raise StopIteration
         dat = self.data[self.current_elem]
-        self.current_elem+=1
+        self.current_elem += 1
         return dat
 
 
@@ -155,7 +155,7 @@ class SearchModelResource(ModelResource):
         object_list = [result.object for result in object_list if result is not None]
 
         # If there is more than one object, then apply authorization limits to the list
-        if len(object_list)>0:
+        if len(object_list) > 0:
             # Mock a bundle, needed to apply auth limits
             bundle = self.build_bundle(obj=object_list[0], request=request)
             bundle = self.full_dehydrate(bundle)
@@ -248,7 +248,7 @@ class OrganizationResource(SearchModelResource):
         resource_name = 'organization'
 
         serializer = default_serialization()
-        authorization= default_authorization()
+        authorization = default_authorization()
         authentication = default_authentication()
         always_return_data = True
         model_type = Organization
@@ -291,7 +291,7 @@ class UserProfileResource(SearchModelResource):
         resource_name = 'userprofile'
 
         serializer = default_serialization()
-        authorization= default_authorization()
+        authorization = default_authorization()
         authentication = default_authentication()
         always_return_data = True
         model_type = UserProfile
@@ -318,7 +318,7 @@ class UserResource(SearchModelResource):
         resource_name = 'user'
 
         serializer = default_serialization()
-        authorization= default_authorization()
+        authorization = default_authorization()
         authentication = default_authentication()
         always_return_data = True
         model_type = User
@@ -345,7 +345,7 @@ class MembershipResource(SearchModelResource):
         resource_name = 'membership'
 
         serializer = default_serialization()
-        authorization= default_authorization()
+        authorization = default_authorization()
         authentication = default_authentication()
         always_return_data = True
         model_type = Membership
@@ -368,7 +368,7 @@ class CourseResource(SearchModelResource):
         resource_name = 'course'
 
         serializer = default_serialization()
-        authorization= default_authorization()
+        authorization = default_authorization()
         authentication = default_authentication()
         always_return_data = True
         model_type = Course
@@ -390,7 +390,7 @@ class ProblemResource(SearchModelResource):
         resource_name = 'problem'
 
         serializer = default_serialization()
-        authorization= default_authorization()
+        authorization = default_authorization()
         authentication = default_authentication()
         always_return_data = True
         model_type = Problem
@@ -415,7 +415,7 @@ class EssayResource(SearchModelResource):
         resource_name = 'essay'
 
         serializer = default_serialization()
-        authorization= default_authorization()
+        authorization = default_authorization()
         authentication = default_authentication()
         always_return_data = True
         model_type = Essay
@@ -441,7 +441,7 @@ class EssayGradeResource(SearchModelResource):
         resource_name = 'essaygrade'
 
         serializer = default_serialization()
-        authorization= default_authorization()
+        authorization = default_authorization()
         authentication = default_authentication()
         always_return_data = True
         model_type = EssayGrade
@@ -462,7 +462,7 @@ def add_membership(user,organization):
     """
     users = organization.users.all()
     membership_count = Membership.objects.filter(user=user).count()
-    if membership_count>=settings.MEMBERSHIP_LIMIT:
+    if membership_count >= settings.MEMBERSHIP_LIMIT:
         error_message = "All users, including user {0} can only have a maximum of 1 organizations.  This will hopefully be fixed in a future release.".format(user)
         log.info(error_message)
         raise BadRequest(error_message)
@@ -470,7 +470,7 @@ def add_membership(user,organization):
         user = user,
         organization = organization,
     )
-    if users.count()==0:
+    if users.count() == 0:
         # If a user is the first one in an organization, make them the administrator.
         membership.role = UserRoles.administrator
         membership.save()
