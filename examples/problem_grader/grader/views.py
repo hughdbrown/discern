@@ -188,8 +188,8 @@ def problem(request):
                                                                        'matching_course_id': matching_course_id,
                                                                        'match_course': match_course,
                                                                        'course_name': course_name,
-    })
-    )
+                                                                       })
+                              )
 
 
 @login_required
