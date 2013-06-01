@@ -4,7 +4,7 @@ import logging
 log = logging.getLogger(__name__)
 
 
-def get_rubric_data(problem_id, target_scores = None):
+def get_rubric_data(problem_id, target_scores=None):
     """
     Retrieve the local rubric that is associated with a given api problem
     problem_id - the id of the problem object that the rubric is associated with
@@ -32,11 +32,11 @@ def create_rubric_objects(rubric_data, request):
     request - the request that the user has made
     """
     # Create the rubric
-    rubric = Rubric(associated_problem = int(rubric_data['problem_id']), user = request.user)
+    rubric = Rubric(associated_problem=int(rubric_data['problem_id']), user=request.user)
     rubric.save()
     # Create each rubric option
     for option in rubric_data['options']:
-        option = RubricOption(rubric=rubric, option_points =option['points'], option_text = option['text'])
+        option = RubricOption(rubric=rubric, option_points=option['points'], option_text=option['text'])
         option.save()
 
 
