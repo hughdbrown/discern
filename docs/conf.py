@@ -192,7 +192,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
     ('index', 'Discern.tex', u'Discern Documentation',
-   u'edX', 'manual'),
+                  u'edX', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -236,8 +236,8 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'Discern', u'Discern Documentation',
-   u'edX', 'Discern', 'One line description of project.',
-   'Miscellaneous'),
+                    u'edX', 'Discern', 'One line description of project.',
+                    'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.
