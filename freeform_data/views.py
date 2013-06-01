@@ -4,7 +4,7 @@ import json
 from django.http import HttpResponse
 import logging
 
-log=logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 
 @csrf_exempt
