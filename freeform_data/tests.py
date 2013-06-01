@@ -175,7 +175,7 @@ def lookup_object(resource_uri):
     c = login()
     result = c.get(resource_uri,
                         data={'format': 'json'}
-    )
+                   )
     return json.loads(result.content)
 
 
@@ -200,7 +200,7 @@ class GenericTest(object):
         """
         result = self.c.get(self.schema,
                             data={'format': 'json'}
-        )
+                            )
 
         self.assertEqual(result.status_code, 200)
 
@@ -210,7 +210,7 @@ class GenericTest(object):
         """
         result = self.c.get(self.endpoint,
                             data={'format': 'json'}
-        )
+                            )
 
         self.assertEqual(result.status_code, 200)
 
@@ -244,7 +244,7 @@ class GenericTest(object):
         object = model_registry[self.type]()
         result = self.c.get(object,
                             data={'format': 'json'}
-        )
+                            )
         self.assertEqual(result.status_code, 200)
 
     def test_search(self):
@@ -256,7 +256,7 @@ class GenericTest(object):
         object = model_registry[self.type]()
         result = self.c.get(self.endpoint + "search/",
                             data={'format': 'json'}
-        )
+                            )
         self.assertEqual(result.status_code, 200)
 
 
