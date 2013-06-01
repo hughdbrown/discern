@@ -50,7 +50,7 @@ class SlumberModel(object):
         self.api_url = api_url
         self.model_type = model_type
         self.api_auth = api_auth
-        self.objects=[]
+        self.objects = []
 
     def get_base_model(self, id = None):
         """
