@@ -255,7 +255,7 @@ LOGGING = {
             },
         'null': {
             'level': 'DEBUG',
-            'class':'django.utils.log.NullHandler',
+            'class': 'django.utils.log.NullHandler',
             },
         },
     'loggers': {
@@ -272,7 +272,7 @@ LOGGING = {
         'django.db.backends': {
             'handlers': ['null'],  # Quiet by default!
             'propagate': False,
-            'level':'DEBUG',
+            'level': 'DEBUG',
             },
         }
 }
