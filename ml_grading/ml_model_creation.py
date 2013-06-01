@@ -208,13 +208,13 @@ def save_model_file(results, save_to_s3):
     success = False
     if save_to_s3:
         pickled_model = ml_grading_util.get_pickle_data(results['prompt'], results['feature_ext'],
-            results['classifier'], results['text'],
-            results['score'])
+                                                        results['classifier'], results['text'],
+                                                        results['score'])
         success, s3_public_url = ml_grading_util.upload_to_s3(pickled_model, results['relative_model_path'], str(settings.S3_BUCKETNAME))
 
     try:
         ml_grading_util.dump_model_to_file(results['prompt'], results['feature_ext'],
-            results['classifier'], results['text'], results['score'], results['model_path'])
+                                           results['classifier'], results['text'], results['score'], results['model_path'])
         if success:
             return True, s3_public_url
         else:
