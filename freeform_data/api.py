@@ -51,11 +51,13 @@ class SessionAuthentication(Authentication):
         """
         return request.user.username
 
+
 def default_authorization():
     """
     Used to ensure that changing authorization can be done on a sitewide level easily.
     """
     return GuardianAuthorization()
+
 
 def default_authentication():
     """
@@ -63,17 +65,20 @@ def default_authentication():
     """
     return MultiAuthentication(SessionAuthentication(), ApiKeyAuthentication())
 
+
 def default_serialization():
     """
     Current serialization formats.  HTML is not supported for now.
     """
     return Serializer(formats=['json', 'jsonp', 'xml', 'yaml', 'html', 'plist'])
 
+
 def default_throttling():
     """
     Default throttling for models.  Currently only affects essay model.
     """
     return UserAccessThrottle(throttle_at=settings.THROTTLE_AT, timeframe=settings.THROTTLE_TIMEFRAME, expiration= settings.THROTTLE_EXPIRATION)
+
 
 def run_search(request,obj):
     """
@@ -90,6 +95,7 @@ def run_search(request,obj):
         raise Http404("Sorry, no results on that page.")
 
     return page.object_list
+
 
 class MockQuerySet(Iterator):
     """
@@ -114,6 +120,7 @@ class MockQuerySet(Iterator):
         dat = self.data[self.current_elem]
         self.current_elem+=1
         return dat
+
 
 class SearchModelResource(ModelResource):
     """
@@ -167,6 +174,7 @@ class SearchModelResource(ModelResource):
 
         self.log_throttled_access(request)
         return self.create_response(request, object_list)
+
 
 class CreateUserResource(ModelResource):
     """
@@ -222,6 +230,7 @@ class CreateUserResource(ModelResource):
             bundle.data['api_key'] = api_key.key
         return bundle
 
+
 class OrganizationResource(SearchModelResource):
     """
     Preserves appropriate many to many relationships, and encapsulates the Organization model.
@@ -270,6 +279,7 @@ class OrganizationResource(SearchModelResource):
                 resource_uris.append(user_resource.get_resource_uri(bundle_or_obj=l_user))
         return resource_uris
 
+
 class UserProfileResource(SearchModelResource):
     """
     Encapsulates the UserProfile module
@@ -290,6 +300,7 @@ class UserProfileResource(SearchModelResource):
 
     def obj_create(self, bundle, request=None, **kwargs):
         return super(UserProfileResource, self).obj_create(bundle,user=bundle.request.user)
+
 
 class UserResource(SearchModelResource):
     """
@@ -321,6 +332,7 @@ class UserResource(SearchModelResource):
         bundle.data['api_key'] = bundle.obj.api_key.key
         return bundle
 
+
 class MembershipResource(SearchModelResource):
     """
     Encapsulates the Membership Model
@@ -341,6 +353,7 @@ class MembershipResource(SearchModelResource):
 
     def obj_create(self, bundle, request=None, **kwargs):
         return super(MembershipResource, self).obj_create(bundle,user=bundle.request.user)
+
 
 class CourseResource(SearchModelResource):
     """
@@ -364,6 +377,7 @@ class CourseResource(SearchModelResource):
     def obj_create(self, bundle, **kwargs):
         return super(CourseResource, self).obj_create(bundle, user=bundle.request.user)
 
+
 class ProblemResource(SearchModelResource):
     """
     Encapsulates the problem Model
@@ -385,6 +399,7 @@ class ProblemResource(SearchModelResource):
 
     def obj_create(self, bundle, **kwargs):
         return super(ProblemResource, self).obj_create(bundle)
+
 
 class EssayResource(SearchModelResource):
     """
@@ -413,6 +428,7 @@ class EssayResource(SearchModelResource):
         bundle.obj.save()
         return bundle
 
+
 class EssayGradeResource(SearchModelResource):
     """
     Encapsulates the EssayGrade Model
@@ -437,6 +453,7 @@ class EssayGradeResource(SearchModelResource):
         bundle.obj.user = bundle.request.user
         bundle.obj.save()
         return bundle
+
 
 def add_membership(user,organization):
     """
