@@ -11,7 +11,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': DB_PATH + 'service-api-test-db.db',
-        }
+    }
 }
 
 # Nose Test Runner
