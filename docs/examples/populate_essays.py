@@ -38,7 +38,7 @@ def add_score(the_essay_uri, the_score):
                     "grader_type": "IN",
                     "success": "true",
                     "target_scores": json.dumps([the_score])
-                    }),
+            }),
             headers=headers)
 
     if score_response.status_code >= 400:
@@ -62,7 +62,7 @@ def add_essay(the_text, the_problem_uri):
                     "essay_type": "train",
                     "essay_text": the_text,
                     "problem": the_problem_uri,
-                    }), headers=headers)
+            }), headers=headers)
     if essay_response.status_code >= 400:
         print ("essay creation failure.")
         pprint("status: {0} msg: {1}".format(
