@@ -26,5 +26,3 @@ response = requests.get(API_BASE_URL + rj['essay']['schema'] + "?format=json")
 
 #This should get a 401 error if you are not logged in.
 print("Status Code: {0}".format(response.status_code))
-
-
