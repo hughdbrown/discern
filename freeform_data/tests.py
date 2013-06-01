@@ -26,7 +26,7 @@ def run_setup():
     """
     Setup function
     """
-    #Check to see if test user is created and create if not.
+    # Check to see if test user is created and create if not.
     if(User.objects.filter(username='test').count() == 0):
         user = User.objects.create_user('test', 'test@test.com', 'test')
         user.save()
@@ -38,7 +38,7 @@ def delete_all():
     """
     Organization.objects.all().delete()
     Course.objects.all().delete()
-    #This should cascade down and delete all associated essays and essaygrades
+    # This should cascade down and delete all associated essays and essaygrades
     Problem.objects.all().delete()
     Membership.objects.all().delete()
 
@@ -58,13 +58,13 @@ def get_first_resource_uri(type):
     Get the first resource uri of an object of a given type
     type - the type of resource as defined in the api, ie "organization"
     """
-    #Create a client and login
+    # Create a client and login
     c = login()
-    #Get the urls needed
+    # Get the urls needed
     endpoint, schema = get_urls(type)
-    #Get the data on all models from the endpoint
+    # Get the data on all models from the endpoint
     data = c.get(endpoint, data={'format' : 'json'})
-    #Grab a single object, and get the resource uri from it
+    # Grab a single object, and get the resource uri from it
     object = json.loads(data.content)['objects'][0]
     resource_uri = object['resource_uri']
     return resource_uri
@@ -251,7 +251,7 @@ class GenericTest(object):
         """
         Test if we can search in a given endpoint
         """
-        #Refresh haystack index
+        # Refresh haystack index
         call_command('update_index', interactive=False)
         object = model_registry[self.type]()
         result = self.c.get(self.endpoint + "search/",
@@ -341,26 +341,26 @@ class MLTest(unittest.TestCase):
         """
         Test to see if an ml model can be created and then if essays can be graded
         """
-        #Create 10 training essays that are scored
+        # Create 10 training essays that are scored
         problem_resource_uri = create_ml_problem_and_essays("train",10)
 
-        #Get the problem so that we can pass it to ml model generation engine
+        # Get the problem so that we can pass it to ml model generation engine
         problem = lookup_object(problem_resource_uri)
         problem_id = problem['id']
         problem_model = Problem.objects.get(id=problem_id)
 
-        #Create the ml model
+        # Create the ml model
         creator_success, message = ml_model_creation.handle_single_problem(problem_model)
 
-        #Create some test essays and see if the model can score them
+        # Create some test essays and see if the model can score them
         essay_list = create_ml_essays_only("test",10, problem_resource_uri)
 
-        #Lookup the first essay and try to score it
+        # Lookup the first essay and try to score it
         essay = lookup_object(essay_list[0])
         essay_id = essay['id']
         essay_model = Essay.objects.get(id=essay_id)
 
-        #Try to score the essay
+        # Try to score the essay
         grader_success, message = ml_grader.handle_single_essay(essay_model)
 
         self.assertEqual(creator_success, settings.FOUND_ML)
