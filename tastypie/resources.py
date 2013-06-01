@@ -364,7 +364,7 @@ class Resource(object):
 
         urls += self.base_urls()
         urlpatterns = patterns('',
-            *urls
+                               *urls
                                )
         return urlpatterns
 
@@ -1934,7 +1934,7 @@ class ModelResource(Resource):
         return [self.fields[field_name].attribute]
 
     def filter_value_to_python(self, value, field_name, filters, filter_expr,
-            filter_type):
+                               filter_type):
         """
         Turn the string ``value`` into a python object.
         """
