@@ -46,7 +46,7 @@ def handle_single_problem(problem):
     essay_text = []
     essay_grades = []
     essay_text_vals = essays.values('essay_text')
-    for i in xrange(0,len(essays)):
+    for i in xrange(0, len(essays)):
         try:
             # Get an instructor score for a given essay (stored as a json string in DB) and convert to a list.  Looks like [1,1]
             # where each number denotes a score for a given target number
@@ -68,15 +68,15 @@ def handle_single_problem(problem):
     # Get the maximum target scores from the problem
     first_len = len(json.loads(problem.max_target_scores))
     bad_list = []
-    for i in xrange(0,len(essay_grades)):
+    for i in xrange(0, len(essay_grades)):
         # All of the lists within the essay grade list (ie [[[1,1],[2,2]]) need to be the same length
         if len(essay_grades[i]) != first_len:
             error_message = "Problem with an instructor scored essay! {0}".format(essay_grades)
             log.info(error_message)
             bad_list.append(i)
 
-    essay_text = [essay_text[t] for t in xrange(0,len(essay_text)) if t not in bad_list]
-    essay_grades = [essay_grades[t] for t in xrange(0,len(essay_grades)) if t not in bad_list]
+    essay_text = [essay_text[t] for t in xrange(0, len(essay_text)) if t not in bad_list]
+    essay_grades = [essay_grades[t] for t in xrange(0, len(essay_grades)) if t not in bad_list]
 
     # Too many essays can take a very long time to train and eat up system resources.  Enforce a max.
     # Accuracy increases logarithmically, anyways, so you dont lose much here.
@@ -93,16 +93,16 @@ def handle_single_problem(problem):
         return False, error_message
 
     # Loops through each potential target
-    for m in xrange(0,first_len):
+    for m in xrange(0, first_len):
         # Gets all of the scores for this particular target
         scores = [s[m] for s in essay_grades]
         max_score = max(scores)
         log.debug("Currently on location {0} in problem {1}".format(m, problem.id))
         # Get paths to ml model from database
-        relative_model_path, full_model_path = ml_grading_util.get_model_path(problem,m)
+        relative_model_path, full_model_path = ml_grading_util.get_model_path(problem, m)
         # Get last created model for given location
         transaction.commit()
-        success, latest_created_model = ml_grading_util.get_latest_created_model(problem,m)
+        success, latest_created_model = ml_grading_util.get_latest_created_model(problem, m)
 
         if success:
             sub_count_diff = graded_sub_count - latest_created_model.number_of_essays
@@ -163,7 +163,7 @@ def handle_single_problem(problem):
                 overall_success = results['success']
                 if results['success']:
                     try:
-                        success, s3_public_url = save_model_file(results,settings.USE_S3_TO_STORE_MODELS)
+                        success, s3_public_url = save_model_file(results, settings.USE_S3_TO_STORE_MODELS)
                         results.update({'s3_public_url' : s3_public_url, 'success' : success})
                         if not success:
                             results['errors'].append("Could not save model.")
@@ -214,7 +214,7 @@ def save_model_file(results, save_to_s3):
 
     try:
         ml_grading_util.dump_model_to_file(results['prompt'], results['feature_ext'],
-            results['classifier'], results['text'],results['score'],results['model_path'])
+            results['classifier'], results['text'], results['score'], results['model_path'])
         if success:
             return True, s3_public_url
         else:
