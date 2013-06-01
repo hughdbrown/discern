@@ -48,6 +48,7 @@ para_log.setLevel(logging.ERROR)
 
 #Use the below setting to pick the remote host that you want to deploy to.
 
+
 @task
 def vagrant(debug=True):
     env.environment = 'vagrant'
@@ -64,6 +65,7 @@ def sandbox():
     env.branch = 'master'
     env.remote_user = 'vik'
 
+
 @task
 def prepare_deployment():
     """
@@ -72,6 +74,7 @@ def prepare_deployment():
     #Make a local commit with latest changes if needed.
     local('git add -p && git commit')
     local("git push")
+
 
 @task
 def check_paths():
@@ -82,6 +85,7 @@ def check_paths():
     logging.basicConfig(level=logging.INFO)
     log.info(ROOT_PATH)
     log.info(ENV_ROOT)
+
 
 @task
 def deploy():
