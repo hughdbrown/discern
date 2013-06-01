@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _, ungettext_lazy
 import logging
 log = logging.getLogger(__name__)
 
+
 class JSONListValidator(object):
     """
     A validator for json lists that are entered into the API
