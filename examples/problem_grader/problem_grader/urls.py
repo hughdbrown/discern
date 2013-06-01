@@ -19,4 +19,4 @@ if settings.DEBUG:
                                'document_root': settings.STATIC_ROOT,
                                'show_indexes': True,
                                }),
-                           )
+                            )
