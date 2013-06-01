@@ -25,6 +25,7 @@ class InvalidValueException(Exception):
     """
     def __init__(self, value):
         self.value = value
+
     def __str__(self):
         return repr(self.value)
 
@@ -35,6 +36,7 @@ class SlumberModel(object):
     """
     #These are not required fields, so don't advertise them as such
     excluded_fields = ['created', 'id', 'resource_uri', 'id', 'modified']
+
     def __init__(self,api_url, model_type, api_auth):
         """
         api_url - the base url for the api (settings.FULL_API_START)
