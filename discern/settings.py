@@ -126,7 +126,7 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
 PIPELINE_JS = {
-    'util' : {
+    'util': {
         'source_filenames': [
             'js/jquery-1.9.1.js',
             'js/json2.js',
@@ -165,7 +165,7 @@ PIPELINE_CSS = {
             ],
         'output_filename': 'css/bootstrap.css',
         },
-    'util_css' : {
+    'util_css': {
         'source_filenames': [
             'css/jquery-ui-1.10.2.custom.css',
             ],
