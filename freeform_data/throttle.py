@@ -30,11 +30,11 @@ class UserAccessThrottle(CacheDBThrottle):
         the user should be throttled.
         """
 
-        #Generate a more granular id
+        # Generate a more granular id
         new_id, url, request_method = self.get_new_id(identifier, **kwargs)
         key = self.convert_identifier_to_key(new_id)
 
-        #See if we can get a user and adjust throttle limit
+        # See if we can get a user and adjust throttle limit
         user = self.get_user(identifier)
         throttle_at = self.get_rate_limit_for_user(user)
 
@@ -60,11 +60,11 @@ class UserAccessThrottle(CacheDBThrottle):
         kwargs - can contain request method and url
         """
 
-        #Generate a new id
+        # Generate a new id
         new_id, url, request_method = self.get_new_id(identifier, **kwargs)
         key = self.convert_identifier_to_key(new_id)
 
-        #Get times accessed and increment
+        # Get times accessed and increment
         times_accessed = cache.get(key, [])
         times_accessed.append(int(time.time()))
         cache.set(key, times_accessed, self.expiration)
