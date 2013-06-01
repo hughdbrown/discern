@@ -25,6 +25,6 @@ def login_to_discern(session, username='test', password='test'):
     return session.post(
                     login_url,
                     json.dumps({
-                            'username' : username,
-                            'password' : password, }),
+                            'username': username,
+                            'password': password, }),
                     headers=headers)
