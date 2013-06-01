@@ -18,7 +18,7 @@ headers = {'content-type': 'application/json'}
 # A session allows us to store cookies and other persistent information.
 # In this case, it lets the server keep us logged in and make requests as a logged in user.
 session = requests.session()
-response = session.post(login_url, data=json.dumps(data),headers=headers)
+response = session.post(login_url, data=json.dumps(data), headers=headers)
 print("Status Code: {0}".format(response.status_code))
 
 # Now, let's try to get all the organization models that we have access to.
