@@ -48,11 +48,11 @@ def get_essaygrade_data(slumber_data, essaygrades):
     problem_id = slumber_data['problem'].split('/')[5]
     essaygrade_data = []
     # Loop through all of the essaygrades attached to the essay
-    for z in xrange(0,len(slumber_data['essaygrades'])):
+    for z in xrange(0, len(slumber_data['essaygrades'])):
         # Get the id of the essaygrade
         essaygrade_id = slumber_data['essaygrades'][z].split('/')[5]
         # Loop through the list of all the users's essaygrades to find a match
-        for i in xrange(0,len(essaygrades)):
+        for i in xrange(0, len(essaygrades)):
             # If there is a match, get the scored rubric data
             if int(essaygrade_id) == int(essaygrades[i]['id']):
                 # Try to extract and parse the target scores
