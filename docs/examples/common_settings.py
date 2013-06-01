@@ -23,8 +23,8 @@ headers = {'content-type': 'application/json'}
 def login_to_discern(session, username='test', password='test'):
     login_url = API_BASE_URL + "/essay_site/login/"
     return session.post(
-                    login_url,
-                    json.dumps({
-                            'username': username,
-                            'password': password, }),
-                    headers=headers)
+        login_url,
+        json.dumps({
+        'username': username,
+        'password': password, }),
+        headers=headers)
