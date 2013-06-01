@@ -36,7 +36,7 @@ class GuardianAuthorization(Authorization):
     # Delete and update permissions can be consolidated into this function
     def check_permissions(self, object_list,bundle, permission_name):
         klass = self.base_checks(bundle.request, object_list.model)
-        update_list=[]
+        update_list = []
 
         if klass is False:
             return []
@@ -49,13 +49,13 @@ class GuardianAuthorization(Authorization):
 
     def check_detail_permissions(self, object_list, bundle, permission_name):
         update_list = self.check_permissions(object_list,bundle, permission_name)
-        if len(update_list)==0:
+        if len(update_list) == 0:
             raise Unauthorized("You are not allowed to access that resource.")
         return True
 
     def read_list(self, object_list, bundle):
         klass = self.base_checks(bundle.request, object_list.model)
-        read_list=[]
+        read_list = []
 
         if klass is False:
             return []
@@ -64,18 +64,18 @@ class GuardianAuthorization(Authorization):
             if check_permissions("view", bundle.request.user, obj):
                 read_list.append(obj)
             # Permissions cannot be created for user models, so hack the permissions to show users their own info
-            if getattr(klass,'__name__')=="User" and bundle.request.user.id == obj.id:
+            if getattr(klass,'__name__') == "User" and bundle.request.user.id == obj.id:
                 read_list.append(obj)
         # GET-style methods are always allowed.
         return read_list
 
     def read_detail(self, object_list, bundle):
         klass = self.base_checks(bundle.request, bundle.obj.__class__)
-        read_list=[]
+        read_list = []
 
         # Users don't exist when their own User model is created, so hack to display user info to people
         # This circumvents the normal permissions model and just shows users their own info
-        if getattr(klass,'__name__')=="User":
+        if getattr(klass,'__name__') == "User":
             if bundle.request.user.id == object_list[0].id:
                 return True
 
@@ -86,14 +86,14 @@ class GuardianAuthorization(Authorization):
         if "schema" in bundle.request.path:
             return True
 
-        if len(read_list)==0:
+        if len(read_list) == 0:
             raise Unauthorized("You are not allowed to access that resource.")
 
         return True
 
     def create_list(self, object_list, bundle):
         klass = self.base_checks(bundle.request, object_list.model)
-        create_list=[]
+        create_list = []
 
         if klass is False:
             return []
@@ -105,7 +105,7 @@ class GuardianAuthorization(Authorization):
 
     def create_detail(self, object_list, bundle):
         klass = self.base_checks(bundle.request, bundle.obj.__class__)
-        create_list=[]
+        create_list = []
 
         if klass is False:
             raise Unauthorized("You are not allowed to access that resource.")
