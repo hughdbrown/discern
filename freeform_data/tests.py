@@ -21,6 +21,7 @@ import sys
 
 log = logging.getLogger(__name__)
 
+
 def run_setup():
     """
     Setup function
@@ -29,6 +30,7 @@ def run_setup():
     if(User.objects.filter(username='test').count() == 0):
         user = User.objects.create_user('test', 'test@test.com', 'test')
         user.save()
+
 
 def delete_all():
     """
@@ -40,6 +42,7 @@ def delete_all():
     Problem.objects.all().delete()
     Membership.objects.all().delete()
 
+
 def get_urls(resource_name):
     """
     Get endpoint and schema urls through url reverse
@@ -48,6 +51,7 @@ def get_urls(resource_name):
     endpoint = reverse("api_dispatch_list", kwargs={'api_name': 'v1','resource_name': resource_name})
     schema = reverse("api_get_schema", kwargs={'api_name': 'v1','resource_name': resource_name})
     return endpoint,schema
+
 
 def get_first_resource_uri(type):
     """
@@ -65,6 +69,7 @@ def get_first_resource_uri(type):
     resource_uri = object['resource_uri']
     return resource_uri
 
+
 def create_object(type, object):
     """
     Create an object of a given type if the data is given
@@ -76,6 +81,7 @@ def create_object(type, object):
     result = c.post(endpoint, json.dumps(object), "application/json")
     return result
 
+
 def login():
     """
     Creates a client, logs in as the test user, and returns the client
@@ -83,6 +89,7 @@ def login():
     c = Client()
     c.login(username='test', password='test')
     return c
+
 
 def create_organization():
     """
@@ -94,6 +101,7 @@ def create_organization():
     organization_resource_uri = json.loads(result.content)['resource_uri']
     return organization_resource_uri
 
+
 def create_course():
     """
     Create a course
@@ -102,6 +110,7 @@ def create_course():
     result = create_object("course", course_object)
     course_resource_uri = json.loads(result.content)['resource_uri']
     return course_resource_uri
+
 
 def create_problem():
     """
@@ -113,6 +122,7 @@ def create_problem():
     problem_resource_uri = json.loads(result.content)['resource_uri']
     return problem_resource_uri
 
+
 def create_essay():
     """
     Create an essay
@@ -122,6 +132,7 @@ def create_essay():
     result = create_object("essay", essay_object)
     essay_resource_uri = json.loads(result.content)['resource_uri']
     return essay_resource_uri
+
 
 def create_essaygrade():
     """
@@ -141,10 +152,12 @@ model_registry = {
     'essaygrade' : create_essaygrade,
 }
 
+
 def create_ml_problem_and_essays(type, count):
     problem_resource_uri = create_problem()
     create_ml_essays_only(type,count,problem_resource_uri)
     return problem_resource_uri
+
 
 def create_ml_essays_only(type,count,problem_resource_uri):
     essay_list = []
@@ -157,12 +170,14 @@ def create_ml_essays_only(type,count,problem_resource_uri):
         create_object("essaygrade", essaygrade_object)
     return essay_list
 
+
 def lookup_object(resource_uri):
     c = login()
     result = c.get(resource_uri,
                         data={'format' : 'json'}
     )
     return json.loads(result.content)
+
 
 class GenericTest(object):
     """
@@ -244,6 +259,7 @@ class GenericTest(object):
         )
         self.assertEqual(result.status_code,200)
 
+
 class OrganizationTest(unittest.TestCase, GenericTest):
     type="organization"
     object = {"name" : "edX"}
@@ -252,12 +268,14 @@ class OrganizationTest(unittest.TestCase, GenericTest):
         Membership.objects.all().delete()
         self.generic_setup()
 
+
 class CourseTest(unittest.TestCase, GenericTest):
     type="course"
     object = {'course_name' : "edx_test"}
 
     def setUp(self):
         self.generic_setup()
+
 
 class ProblemTest(unittest.TestCase, GenericTest):
     type="problem"
@@ -270,6 +288,7 @@ class ProblemTest(unittest.TestCase, GenericTest):
         course_resource_uri = create_course()
         self.object = {'courses' : [course_resource_uri], 'max_target_scores' : json.dumps([1,1]), 'prompt' : "blah"}
 
+
 class EssayTest(unittest.TestCase, GenericTest):
     type="essay"
 
@@ -281,6 +300,7 @@ class EssayTest(unittest.TestCase, GenericTest):
         problem_resource_uri = create_problem()
         self.object = {'problem' : problem_resource_uri, 'essay_text' : "This is a test essay!", 'essay_type' : 'train'}
 
+
 class EssayGradeTest(unittest.TestCase, GenericTest):
     type="essaygrade"
 
@@ -291,6 +311,7 @@ class EssayGradeTest(unittest.TestCase, GenericTest):
     def create_object(self):
         essay_resource_uri = create_essay()
         self.object = {'essay' : essay_resource_uri, 'target_scores' : json.dumps([1,1]), 'grader_type' : "IN", 'feedback' : "Was ok.", 'success' : True}
+
 
 class CreateUserTest(unittest.TestCase):
     type = "createuser"
@@ -313,6 +334,7 @@ class CreateUserTest(unittest.TestCase):
         """
         result = self.c.post(self.endpoint, json.dumps(self.post_data), "application/json")
         self.assertEqual(result.status_code,201)
+
 
 class MLTest(unittest.TestCase):
     def test_ml_creation(self):
@@ -344,6 +366,7 @@ class MLTest(unittest.TestCase):
         self.assertEqual(creator_success, settings.FOUND_ML)
         self.assertEqual(grader_success, settings.FOUND_ML)
 
+
 class ViewTest(unittest.TestCase):
     def setUp(self):
         run_setup()
@@ -367,6 +390,7 @@ class ViewTest(unittest.TestCase):
         response = self.c.post(logout_url)
         response_code = json.loads(response.content)['success']
         self.assertEqual(response_code,True)
+
 
 class FinalTest(unittest.TestCase):
     def test_delete(self):
