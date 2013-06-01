@@ -6,6 +6,7 @@ from slumber_models import SlumberModelDiscovery
 
 log=logging.getLogger(__name__)
 
+
 def get_rubric_data(model, slumber_data):
     """
     Get the rubric data for a given data file and attach it.
@@ -27,6 +28,7 @@ def get_rubric_data(model, slumber_data):
 
     return rubric_data
 
+
 def construct_related_uri(id, model_type):
     """
     Given an integer id, construct a related model uri
@@ -34,6 +36,7 @@ def construct_related_uri(id, model_type):
     model_type - the type of model to post (ie 'organization')
     """
     return "/{api_url}{model_type}/{id}/".format(api_url=settings.API_URL_INTERMEDIATE, model_type=model_type, id=id)
+
 
 def get_essaygrade_data(slumber_data, essaygrades):
     """
@@ -64,6 +67,7 @@ def get_essaygrade_data(slumber_data, essaygrades):
                 essaygrades[i]['rubric'] = rubric_data
                 essaygrade_data.append(essaygrades[i])
     return essaygrade_data
+
 
 def setup_slumber_models(user, model_types=None):
     """
