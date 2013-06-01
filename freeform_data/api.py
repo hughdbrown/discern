@@ -452,4 +452,3 @@ def add_membership(user,organization):
     else:
         membership.role = UserRoles.student
     membership.save()
-
