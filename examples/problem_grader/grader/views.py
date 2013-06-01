@@ -22,7 +22,7 @@ def register(request):
             return HttpResponseRedirect("/grader/")
     else:
         form = UserCreationForm()
-    return render_to_response("registration/register.html", RequestContext(request,{
+    return render_to_response("registration/register.html", RequestContext(request, {
         'form': form,
         }))
 
@@ -31,7 +31,7 @@ def index(request):
     """
     Index page for the site.
     """
-    return render_to_response("index.html",RequestContext(request))
+    return render_to_response("index.html", RequestContext(request))
 
 # Available types of actions
 action_types = ["update", "delete", "get", "post"]
@@ -81,7 +81,7 @@ def action(request):
         rubric = data['rubric'].copy()
         # Add in two needed fields (the api requires them)
         data.update({
-            'max_target_scores' : [1 for i in xrange(0,len(data['rubric']['options']))],
+            'max_target_scores' : [1 for i in xrange(0, len(data['rubric']['options']))],
             'courses' : [helpers.construct_related_uri(data['course'], 'course')]
         })
         # Remove these keys (posting to the api will fail if they are still in)
@@ -111,7 +111,7 @@ def action(request):
 
     try:
         # Try to see if we can perform the given action on the given model
-        slumber_data = slumber_models[model].action(action,id=id,data=data)
+        slumber_data = slumber_models[model].action(action, id=id, data=data)
     except Exception as inst:
         # If we cannot, log the error information from slumber.  Will likely contain the error message recieved from the api
         error_message = "Could not perform action {action} on model type {model} with id {id} and data {data}.".format(action=action, model=model, id=id, data=data)
@@ -129,8 +129,8 @@ def action(request):
 
     # Append rubric to problem and essay objects
     if (action in ["get", "post"] and model == "problem") or (action == "get" and model == "essay"):
-        if isinstance(slumber_data,list):
-            for i in xrange(0,len(slumber_data)):
+        if isinstance(slumber_data, list):
+            for i in xrange(0, len(slumber_data)):
                     slumber_data[i]['rubric'] = helpers.get_rubric_data(model, slumber_data[i])
         else:
             slumber_data['rubric'] = helpers.get_rubric_data(model, slumber_data)
@@ -138,8 +138,8 @@ def action(request):
     # append essaygrades to essay objects
     if action == "get" and model == "essay":
         essaygrades = slumber_models['essaygrade'].action('get')
-        if isinstance(slumber_data,list):
-            for i in xrange(0,len(slumber_data)):
+        if isinstance(slumber_data, list):
+            for i in xrange(0, len(slumber_data)):
                 slumber_data[i]['essaygrades_full'] = helpers.get_essaygrade_data(slumber_data[i], essaygrades)
         else:
             slumber_data['essaygrades_full'] = helpers.get_essaygrade_data(slumber_data, essaygrades)
@@ -178,7 +178,7 @@ def problem(request):
         match_course = True
         user = request.user
         slumber_models = helpers.setup_slumber_models(user)
-        course_object = slumber_models['course'].action('get',id=matching_course_id, data=None)
+        course_object = slumber_models['course'].action('get', id=matching_course_id, data=None)
         course_name = course_object['course_name']
 
     matching_course_id = str(matching_course_id)
@@ -197,7 +197,7 @@ def write_essays(request):
     """
     Render the page for writing essays
     """
-    return render_to_response('write_essay.html', RequestContext(request, {'api_url' : "/grader/action", 'model' : 'essay',}))
+    return render_to_response('write_essay.html', RequestContext(request, {'api_url' : "/grader/action", 'model' : 'essay', }))
 
 
 @login_required
@@ -205,4 +205,4 @@ def grade_essays(request):
     """
     Render the page for grading essays
     """
-    return render_to_response('grade_essay.html', RequestContext(request, {'api_url' : "/grader/action", 'model' : 'essaygrade',}))
+    return render_to_response('grade_essay.html', RequestContext(request, {'api_url' : "/grader/action", 'model' : 'essaygrade', }))
