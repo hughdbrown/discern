@@ -40,12 +40,12 @@ def get_model_path(problem, target_number=0):
     create_directory(base_path)
 
     # Create a filepath from the problem id and target number that is unique across problems
-    fixed_location = "{0}_{1}".format(problem_id,target_number)
+    fixed_location = "{0}_{1}".format(problem_id, target_number)
     # Add a time to make it unique within the scope of this problem
     fixed_location += "_" + timezone.now().strftime("%Y%m%d%H%M%S")
-    full_path = os.path.join(base_path,fixed_location)
+    full_path = os.path.join(base_path, fixed_location)
     # return relative and full path because this model may be sent to S3 and to other machines
-    return fixed_location,full_path
+    return fixed_location, full_path
 
 
 def get_latest_created_model(problem, target_number=0):
@@ -125,7 +125,7 @@ def get_pickle_data(prompt_string, feature_ext, classifier, text, score):
     return pickle.dumps(model_file)
 
 
-def dump_model_to_file(prompt_string, feature_ext, classifier, text, score,model_path):
+def dump_model_to_file(prompt_string, feature_ext, classifier, text, score, model_path):
     """
     Dumps input data to a file.  See get_pickle_data for argument types.
     """
