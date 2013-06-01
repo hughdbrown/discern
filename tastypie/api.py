@@ -116,7 +116,7 @@ class Api(object):
             urlpatterns += overridden_urls
 
         urlpatterns += patterns('',
-            *pattern_list
+                                *pattern_list
                                 )
         return urlpatterns
 
