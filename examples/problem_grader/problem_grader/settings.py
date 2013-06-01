@@ -112,9 +112,9 @@ PIPELINE_JS = {
             'js/bootstrap.js',
             'js/jquery.cookie.js',
             'js/underscore.js',
-            ],
+        ],
         'output_filename': 'js/util.js',
-        },
+    },
     'course': {
         'source_filenames': [
             'js/course.js',
@@ -124,23 +124,23 @@ PIPELINE_JS = {
     'problem': {
         'source_filenames': [
             'js/problem.js',
-            ],
+        ],
         'output_filename': 'js/problem.js',
     },
     'essay': {
     'source_filenames': [
         'js/essay.js',
         'js/essay_nav.js'
-        ],
+    ],
     'output_filename': 'js/essay.js',
     },
     'essaygrade': {
         'source_filenames': [
             'js/essaygrade.js',
             'js/essay_nav.js',
-            ],
+        ],
         'output_filename': 'js/essaygrade.js',
-        },
+    },
 }
 
 PIPELINE_CSS = {
@@ -149,15 +149,15 @@ PIPELINE_CSS = {
             'css/bootstrap.css',
             'css/bootstrap-responsive.css',
             'css/bootstrap-extensions.css',
-            ],
+        ],
         'output_filename': 'css/bootstrap.css',
-        },
+    },
     'util_css': {
         'source_filenames': [
             'css/jquery-ui-1.10.2.custom.css',
-            ],
+        ],
         'output_filename': 'css/util_css.css',
-        }
+    }
 }
 
 
@@ -242,28 +242,28 @@ LOGGING = {
         'standard': {
             'format': '%(asctime)s %(levelname)s %(process)d '
                       '[%(name)s] %(filename)s:%(lineno)d - %(message)s',
-            },
+        },
         'syslog_format': {'format': syslog_format},
         'raw': {'format': '%(message)s'},
-        },
+    },
     'handlers': {
         'console': {
             'level': 'DEBUG' if DEBUG else 'INFO',
             'class': 'logging.StreamHandler',
             'formatter': 'standard',
             'stream': sys.stdout,
-            },
+        },
         'null': {
             'level': 'DEBUG',
             'class': 'django.utils.log.NullHandler',
-            },
         },
+    },
     'loggers': {
         'django.request': {
             'handlers': ['console'],
             'level': 'ERROR',
             'propagate': True,
-            },
+        },
         '': {
             'handlers': ['console'],
             'level': 'DEBUG',
@@ -273,6 +273,6 @@ LOGGING = {
             'handlers': ['null'],  # Quiet by default!
             'propagate': False,
             'level': 'DEBUG',
-            },
-        }
+        },
+    }
 }
