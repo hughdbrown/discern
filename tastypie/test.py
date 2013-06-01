@@ -266,7 +266,7 @@ class ResourceTestCase(TestCase):
             username,
             method.upper(),
             uri,
-            1, # nonce_count
+            1,  # nonce_count
             digest_challenge=python_digest.build_digest_challenge(time.time(), getattr(settings, 'SECRET_KEY', ''), 'django-tastypie', opaque, False),
             password=api_key
         )
