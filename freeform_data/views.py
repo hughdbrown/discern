@@ -6,6 +6,7 @@ import logging
 
 log=logging.getLogger(__name__)
 
+
 @csrf_exempt
 def login(request):
     """
@@ -37,6 +38,7 @@ def login(request):
     else:
         return error_response('Incorrect login credentials.')
 
+
 def logout(request):
     """
     Uses django auth to handle a logout request
@@ -44,15 +46,19 @@ def logout(request):
     django.contrib.auth.logout(request)
     return success_response('Goodbye')
 
+
 def success_response(message):
     return generic_response(message, True)
+
 
 def error_response(message):
     return generic_response(message, False)
 
+
 def generic_response(message, success):
     message = {'success' : success, 'message' : message}
     return HttpResponse(json.dumps(message))
+
 
 def status(request):
     """
