@@ -6,7 +6,7 @@ from urllib import unquote
 from django.contrib.gis.db.models import GeometryField
 try:
     import json as simplejson
-except ImportError: # < Python 2.6
+except ImportError:  # < Python 2.6
     from django.utils import simplejson
 from django.contrib.gis.geos import GEOSGeometry
 
