@@ -10,6 +10,8 @@ session = requests.session()
 response = login_to_discern(session)
 
 # Given a resource_uri for an essaygrade, pretty print the values.
+
+
 def enumerate_grades(essaygrades_uri):
     response = session.get(API_BASE_URL + essaygrades_uri + "?format=json")
     grade = json.loads(response.text)
