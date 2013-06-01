@@ -21,8 +21,8 @@ def add_problem(the_prompt, the_class):
     if problem_response.status_code >= 400:
         print ("Problem creation failure.")
         pprint("status: {0} msg: {1}".format(
-                        problem_response.status_code,
-                        problem_response._content))
+            problem_response.status_code,
+            problem_response._content))
         pprint (vars(problem_response.request))
         exit(1)
     problem_object = json.loads(problem_response.text)
@@ -34,18 +34,18 @@ def add_problem(the_prompt, the_class):
 def add_score(the_essay_uri, the_score):
     score_response = session.post(API_BASE_URL + "/essay_site/api/v1/essaygrade/?format=json",
             data=json.dumps({
-                    "essay": the_essay_uri,
-                    "grader_type": "IN",
-                    "success": "true",
-                    "target_scores": json.dumps([the_score])
+        "essay": the_essay_uri,
+        "grader_type": "IN",
+        "success": "true",
+        "target_scores": json.dumps([the_score])
             }),
-            headers=headers)
+        headers=headers)
 
     if score_response.status_code >= 400:
         print ("Score creation failure.")
         pprint("status: {0} msg: {1}".format(
-                score_response.status_code,
-                score_response._content))
+            score_response.status_code,
+            score_response._content))
         pprint (vars(score_response.request))
         exit(1)
     # GradeEssay doesn't have a resource_uri field
@@ -59,15 +59,15 @@ def add_essay(the_text, the_problem_uri):
     uri = None
     essay_response = session.post(API_BASE_URL + "/essay_site/api/v1/essay/?format=json",
             data=json.dumps({
-                    "essay_type": "train",
-                    "essay_text": the_text,
-                    "problem": the_problem_uri,
+        "essay_type": "train",
+        "essay_text": the_text,
+        "problem": the_problem_uri,
             }), headers=headers)
     if essay_response.status_code >= 400:
         print ("essay creation failure.")
         pprint("status: {0} msg: {1}".format(
-                essay_response.status_code,
-                essay_response._content))
+            essay_response.status_code,
+            essay_response._content))
         pprint (vars(essay_response.request))
         exit(1)
     essay_object = json.loads(essay_response.text)
