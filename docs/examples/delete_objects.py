@@ -13,7 +13,7 @@ response = login_to_discern(session)
 
 # problems
 problem_response = session.get(API_BASE_URL + "/essay_site/api/v1/problem/?offset=0&limit=200&f?format=json",
-        headers=headers)
+                               headers=headers)
 
 for p in json.loads(problem_response.text)['objects']:
     print (u"Problem problem: {0}, URI: {1} ".format(p['prompt'], p['resource_uri']))
@@ -24,9 +24,9 @@ for p in json.loads(problem_response.text)['objects']:
 
 # courses
 course_response = session.delete(API_BASE_URL + "/essay_site/api/v1/course/1/?format=json",
-        headers=headers)
+                                 headers=headers)
 
 
 # organizations.
 org_response = session.delete(API_BASE_URL + "/essay_site/api/v1/organization/1/?format=json",
-        headers=headers)
+                              headers=headers)
