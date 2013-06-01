@@ -166,5 +166,3 @@ def store_model_locally(created_model,results):
         return False, error_message
 
     return True, "Saved file."
-
-
