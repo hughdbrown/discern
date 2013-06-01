@@ -128,15 +128,15 @@ def handle_single_problem(problem):
             # If a model has not been started, then initialize an entry in the database to prevent other threads from duplicating work
             if not model_started:
                 created_model_dict_initial = {
-                    'max_score' : max_score,
-                    'prompt' : prompt,
-                    'problem' : problem,
-                    'model_relative_path' : relative_model_path,
-                    'model_full_path' : full_model_path,
-                    'number_of_essays' : graded_sub_count,
+                    'max_score': max_score,
+                    'prompt': prompt,
+                    'problem': problem,
+                    'model_relative_path': relative_model_path,
+                    'model_full_path': full_model_path,
+                    'number_of_essays': graded_sub_count,
                     'creation_succeeded': False,
-                    'creation_started' : True,
-                    'target_number' : m,
+                    'creation_started': True,
+                    'target_number': m,
                     }
                 created_model = CreatedModel(**created_model_dict_initial)
                 created_model.save()
@@ -155,8 +155,8 @@ def handle_single_problem(problem):
                 scores = [int(score_item) for score_item in scores]
                 # Add in needed stuff that ml creator does not pass back
                 results.update({
-                    'model_path' : full_model_path,
-                    'relative_model_path' : relative_model_path
+                    'model_path': full_model_path,
+                    'relative_model_path': relative_model_path
                 })
 
                 # Try to create model if ml model creator was successful
@@ -164,7 +164,7 @@ def handle_single_problem(problem):
                 if results['success']:
                     try:
                         success, s3_public_url = save_model_file(results, settings.USE_S3_TO_STORE_MODELS)
-                        results.update({'s3_public_url' : s3_public_url, 'success' : success})
+                        results.update({'s3_public_url': s3_public_url, 'success': success})
                         if not success:
                             results['errors'].append("Could not save model.")
                     except:
@@ -173,15 +173,15 @@ def handle_single_problem(problem):
                         log.exception("Problem saving ML model.")
 
                 created_model_dict_final = {
-                    'cv_kappa' : results['cv_kappa'],
-                    'cv_mean_absolute_error' : results['cv_mean_absolute_error'],
+                    'cv_kappa': results['cv_kappa'],
+                    'cv_mean_absolute_error': results['cv_mean_absolute_error'],
                     'creation_succeeded': results['success'],
-                    'creation_started' : False,
-                    's3_public_url' : results['s3_public_url'],
-                    'model_stored_in_s3' : settings.USE_S3_TO_STORE_MODELS,
-                    's3_bucketname' : str(settings.S3_BUCKETNAME),
-                    'model_relative_path' : relative_model_path,
-                    'model_full_path' : full_model_path,
+                    'creation_started': False,
+                    's3_public_url': results['s3_public_url'],
+                    'model_stored_in_s3': settings.USE_S3_TO_STORE_MODELS,
+                    's3_bucketname': str(settings.S3_BUCKETNAME),
+                    'model_relative_path': relative_model_path,
+                    'model_full_path': full_model_path,
                     }
 
                 transaction.commit()
