@@ -6,6 +6,7 @@ import os
 
 log = logging.getLogger(__name__)
 
+
 def join_without_slash(path1, path2):
     """
     Join two paths and ensure that only one slash is used at the join point
@@ -19,6 +20,7 @@ def join_without_slash(path1, path2):
 
     return path1 + path2
 
+
 class InvalidValueException(Exception):
     """
     Exception for an invalid value
@@ -28,6 +30,7 @@ class InvalidValueException(Exception):
 
     def __str__(self):
         return repr(self.value)
+
 
 class SlumberModel(object):
     """
@@ -202,6 +205,7 @@ class SlumberModel(object):
         #Perform the action
         result = action_dict[action](data=data, id=id)
         return result
+
 
 class SlumberModelDiscovery(object):
     """
