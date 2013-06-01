@@ -17,14 +17,14 @@ REPO_PATH = ROOT_PATH.dirname()
 ENV_ROOT = REPO_PATH.dirname()
 
 # ML Specific settings
-ML_MODEL_PATH=os.path.join(REPO_PATH,"ml_models_api/")  # Path to save and retrieve ML models from
-TIME_BETWEEN_ML_CREATOR_CHECKS= 1 * 60  # seconds.  Time between ML creator checking to see if models need to be made.
-TIME_BETWEEN_ML_GRADER_CHECKS= 10  # seconds.  Time between ML grader checking to see if models need to be made.
-USE_S3_TO_STORE_MODELS= False  # Determines whether or not models are placed in Amazon S3
+ML_MODEL_PATH = os.path.join(REPO_PATH,"ml_models_api/")  # Path to save and retrieve ML models from
+TIME_BETWEEN_ML_CREATOR_CHECKS = 1 * 60  # seconds.  Time between ML creator checking to see if models need to be made.
+TIME_BETWEEN_ML_GRADER_CHECKS = 10  # seconds.  Time between ML grader checking to see if models need to be made.
+USE_S3_TO_STORE_MODELS = False  # Determines whether or not models are placed in Amazon S3
 
 # Credentials for the S3 bucket.  Do not edit here, but provide the right settings in env.json and auth.json, and then
 # use aws.py as the settings file.
-S3_BUCKETNAME="OpenEnded"
+S3_BUCKETNAME = "OpenEnded"
 AWS_ACCESS_KEY_ID = None
 AWS_SECRET_ACCESS_KEY = None
 
@@ -348,16 +348,16 @@ except:
 
 # Tastypie throttle settings
 THROTTLE_AT = 10000  # Throttle requests after this number in below timeframe, dev settings, so high!
-THROTTLE_TIMEFRAME= 60 * 60  # Timeframe in which to throttle N requests, seconds
-THROTTLE_EXPIRATION= 24 * 60 * 60  # When to remove throttle entries from cache, seconds
+THROTTLE_TIMEFRAME = 60 * 60  # Timeframe in which to throttle N requests, seconds
+THROTTLE_EXPIRATION = 24 * 60 * 60  # When to remove throttle entries from cache, seconds
 
 # Model settings
-MEMBERSHIP_LIMIT=1  # Currently users can only be in one organization
+MEMBERSHIP_LIMIT = 1  # Currently users can only be in one organization
 
 # Django-allauth settings
 ACCOUNT_EMAIL_VERIFICATION = "none"  # No email verification required locally
 ACCOUNT_EMAIL_REQUIRED = True  # Ask user to enter an email
-ACCOUNT_AUTHENTICATION_METHOD="username_email"  # Can enter username or email to login
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"  # Can enter username or email to login
 ACCOUNT_PASSWORD_MIN_LENGTH = 3  # For testing, set password minimum low.
 
 # Django email backend for local testing
