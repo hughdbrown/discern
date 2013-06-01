@@ -55,7 +55,7 @@ def grade_ml():
     """
     transaction.commit_unless_managed()
     # TODO: Add in some checking to ensure that count is of instructor graded essays only
-    problems = Problem.objects.all().annotate(essay_count=Count('essay')).filter(essay_count__gt=(MIN_ESSAYS_TO_TRAIN_WITH-1))
+    problems = Problem.objects.all().annotate(essay_count=Count('essay')).filter(essay_count__gt=(MIN_ESSAYS_TO_TRAIN_WITH -1))
     for problem in problems:
         grade_ml_essays(problem)
 
