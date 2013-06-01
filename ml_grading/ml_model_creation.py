@@ -28,6 +28,7 @@ else:
 MAX_ESSAYS_TO_TRAIN_WITH = 1000
 MIN_ESSAYS_TO_TRAIN_WITH = 10
 
+
 @transaction.commit_manually
 def handle_single_problem(problem):
     """
@@ -196,6 +197,7 @@ def handle_single_problem(problem):
                 ))
     transaction.commit()
     return overall_success, "Creation succeeded."
+
 
 def save_model_file(results, save_to_s3):
     """
