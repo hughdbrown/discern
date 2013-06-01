@@ -71,6 +71,3 @@ class JSONListValidator(object):
                 if value[i]>self.matching_list[i]:
                     error_message = "Value {i} in provided scores greater than max defined in problem. {value} : {matching}".format(i=i, value=value, matching=self.matching_list)
                     raise ValidationError(error_message)
-
-
-
