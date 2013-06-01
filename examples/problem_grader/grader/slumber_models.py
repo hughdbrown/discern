@@ -179,10 +179,10 @@ class SlumberModel(object):
 
         # Define the actions that are possible, and map them to functions
         action_dict = {
-            'get' : self.get,
-            'post' : self.post,
-            'update' : self.update,
-            'delete' : self.delete,
+            'get': self.get,
+            'post': self.post,
+            'update': self.update,
+            'delete': self.delete,
         }
         # Check to see if action is possible
         if action not in action_dict:
