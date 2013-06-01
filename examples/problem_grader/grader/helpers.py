@@ -13,13 +13,13 @@ def get_rubric_data(model, slumber_data):
     model - a model type, currently "problem" or "essay"
     slumber_data - a dict returned by slumber from the api
     """
-    #Extract the problem id
+    # Extract the problem id
     if model=="problem":
         problem_id = slumber_data['id']
     else:
         problem_id = slumber_data['problem'].split('/')[5]
 
-    #Try to get the local rubric data matching the problem id
+    # Try to get the local rubric data matching the problem id
     rubric_data = []
     try:
         rubric_data = rubric_functions.get_rubric_data(problem_id)
@@ -44,26 +44,26 @@ def get_essaygrade_data(slumber_data, essaygrades):
     slumber_data - the dict for the essay model retrieved by slumber from the api
     essaygrades - a list of all the essaygrade objects for the user
     """
-    #Get the problem id from the essay
+    # Get the problem id from the essay
     problem_id = slumber_data['problem'].split('/')[5]
     essaygrade_data = []
-    #Loop through all of the essaygrades attached to the essay
+    # Loop through all of the essaygrades attached to the essay
     for z in xrange(0,len(slumber_data['essaygrades'])):
-        #Get the id of the essaygrade
+        # Get the id of the essaygrade
         essaygrade_id = slumber_data['essaygrades'][z].split('/')[5]
-        #Loop through the list of all the users's essaygrades to find a match
+        # Loop through the list of all the users's essaygrades to find a match
         for i in xrange(0,len(essaygrades)):
-            #If there is a match, get the scored rubric data
+            # If there is a match, get the scored rubric data
             if int(essaygrade_id) == int(essaygrades[i]['id']):
-                #Try to extract and parse the target scores
+                # Try to extract and parse the target scores
                 target_scores = essaygrades[i]['target_scores']
                 try:
                     target_scores = json.loads(target_scores)
                 except:
                     pass
-                #Retrieve the local rubric, and match with the target scores.
+                # Retrieve the local rubric, and match with the target scores.
                 rubric_data = rubric_functions.get_rubric_data(problem_id, target_scores)
-                #Add the rubric data to the essaygrade
+                # Add the rubric data to the essaygrade
                 essaygrades[i]['rubric'] = rubric_data
                 essaygrade_data.append(essaygrades[i])
     return essaygrade_data
@@ -75,10 +75,10 @@ def setup_slumber_models(user, model_types=None):
     user - a django user object
     model_types - if you only want to setup certain types of models, pass them in
     """
-    #Get the api authentication dictionary for the user
+    # Get the api authentication dictionary for the user
     api_auth = user.profile.get_api_auth()
-    #Instantiate the slumber model discovery class for the api endpoint specified in settings
+    # Instantiate the slumber model discovery class for the api endpoint specified in settings
     slumber_discovery = SlumberModelDiscovery(settings.FULL_API_START, api_auth)
-    #Generate all the models
+    # Generate all the models
     models = slumber_discovery.generate_models(model_types)
     return models
