@@ -12,7 +12,7 @@ from django.contrib.auth.models import SiteProfileNotAvailable
 import logging
 log=logging.getLogger(__name__)
 
-#CLASSES THAT WRAP CONSTANTS
+# CLASSES THAT WRAP CONSTANTS
 
 
 class UserRoles(object):
@@ -50,16 +50,16 @@ GRADER_TYPES = (
 PERMISSIONS = ["view", "add", "delete", "change"]
 PERMISSION_MODELS = ["organization", "membership", "userprofile", "course", "problem", "essay", "essaygrade"]
 
-#MODELS
+# MODELS
 
 
 class Organization(models.Model):
-    #TODO: Add in address info, etc later on
+    # TODO: Add in address info, etc later on
     organization_size = models.IntegerField(default=0)
     organization_name = models.TextField(default="")
-    #TODO: Add in billing details, etc later, along with rules on when to ask
+    # TODO: Add in billing details, etc later, along with rules on when to ask
     premium_service_subscriptions = models.TextField(default=json.dumps([]))
-    #Each organization can have many users, and a user can be in multiple organizations
+    # Each organization can have many users, and a user can be in multiple organizations
     users = models.ManyToManyField(User, blank=True,null=True, through="freeform_data.Membership")
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -86,17 +86,17 @@ class Membership(models.Model):
             error_message = "You can currently only be a member of a single organization.  This will hopefully be changed in the future.  Generated for user {0}.".format(self.user)
             log.info(error_message)
             return error_message
-        super(Membership, self).save(*args, **kwargs) # Call the "real" save() method.
+        super(Membership, self).save(*args, **kwargs)  # Call the "real" save() method.
 
 
 class UserProfile(models.Model):
-    #TODO: Add in a callback where if user identifies as "administrator", then they can create an organization
-    #Each userprofile has one user, and vice versa
+    # TODO: Add in a callback where if user identifies as "administrator", then they can create an organization
+    # Each userprofile has one user, and vice versa
     user = models.OneToOneField(User, unique=True, blank=True,null=True)
-    #TODO: Potentially support users being in multiple orgs, but will be complicated
-    #Add in userinfo here.  Location, etc
+    # TODO: Potentially support users being in multiple orgs, but will be complicated
+    # Add in userinfo here.  Location, etc
     name = models.TextField(blank=True,null=True)
-    #User role in their organization
+    # User role in their organization
     role = models.CharField(max_length=20,blank=True,null=True)
     throttle_at = models.IntegerField(default=0)
 
@@ -110,11 +110,11 @@ class UserProfile(models.Model):
 
 
 class Course(models.Model):
-    #A user can have many courses, and a course can have many users
+    # A user can have many courses, and a course can have many users
     users = models.ManyToManyField(User)
-    #A course can be shared between organizations
+    # A course can be shared between organizations
     organizations = models.ManyToManyField(Organization)
-    #Each course has a name!
+    # Each course has a name!
     course_name = models.TextField()
 
     created = models.DateTimeField(auto_now_add=True)
@@ -127,15 +127,15 @@ class Course(models.Model):
 
 
 class Problem(models.Model):
-    #A course has many problems, and a problem can be used in many courses
+    # A course has many problems, and a problem can be used in many courses
     courses = models.ManyToManyField(Course)
-    #Max scores for one or many targets
+    # Max scores for one or many targets
     max_target_scores = models.TextField(default=json.dumps([1]))
-    #If additional numeric predictors are being sent, the count of them
+    # If additional numeric predictors are being sent, the count of them
     number_of_additional_predictors = models.IntegerField(default=0)
-    #Prompt of the problem
+    # Prompt of the problem
     prompt = models.TextField(default="")
-    #If org has subscriptions to premium feedback models
+    # If org has subscriptions to premium feedback models
     premium_feedback_models = models.TextField(default=json.dumps([]))
     name = models.TextField(default="")
 
@@ -149,17 +149,17 @@ class Problem(models.Model):
 
 
 class Essay(models.Model):
-    #Each essay is written for a specific problem
+    # Each essay is written for a specific problem
     problem = models.ForeignKey(Problem)
-    #Each essay is written by a specified user
+    # Each essay is written by a specified user
     user = models.ForeignKey(User, null=True)
-    #Each essay is associated with an organization
+    # Each essay is associated with an organization
     organization = models.ForeignKey(Organization, null=True)
-    #Each user writes text (their essay)
+    # Each user writes text (their essay)
     essay_text = models.TextField()
-    #Schools may wish to send additional predictors (student grade level, etc)
+    # Schools may wish to send additional predictors (student grade level, etc)
     additional_predictors = models.TextField(default=json.dumps([]))
-    #The type of essay (train or test)  see EssayTypes class
+    # The type of essay (train or test)  see EssayTypes class
     essay_type = models.CharField(max_length=20)
     has_been_ml_graded = models.BooleanField(default=False)
 
@@ -176,23 +176,23 @@ class Essay(models.Model):
 
 
 class EssayGrade(models.Model):
-    #Each essaygrade is for a specific essay
+    # Each essaygrade is for a specific essay
     essay = models.ForeignKey(Essay)
-    #How the essay was scored for numerous targets
+    # How the essay was scored for numerous targets
     target_scores = models.TextField()
-    #What type of grader graded it
+    # What type of grader graded it
     grader_type = models.CharField(max_length=20)
-    #Feedback from the grader
+    # Feedback from the grader
     feedback = models.TextField()
-    #Annotated text from the grader
+    # Annotated text from the grader
     annotated_text = models.TextField(default="")
-    #Scores on premium feedback model, if any
+    # Scores on premium feedback model, if any
     premium_feedback_scores = models.TextField(default=json.dumps([]))
-    #whether or not the grader succeeded
+    # whether or not the grader succeeded
     success = models.BooleanField()
-    #For peer grading and staff grading, we will use this
+    # For peer grading and staff grading, we will use this
     user = models.ForeignKey(User,blank=True,null=True)
-    #Confidence value from the grader
+    # Confidence value from the grader
     confidence = models.DecimalField(max_digits=10,decimal_places=9, default=1)
 
     created = models.DateTimeField(auto_now_add=True)
@@ -204,7 +204,7 @@ class EssayGrade(models.Model):
         )
 
 
-#MODEL SIGNAL CALLBACKS
+# MODEL SIGNAL CALLBACKS
 
 def create_user_profile(sender, instance, created, **kwargs):
     """
@@ -298,7 +298,7 @@ def add_creator_permissions(sender, instance, **kwargs):
     except:
         pass
 
-#Django signals called after models are handled
+# Django signals called after models are handled
 pre_save.connect(remove_user_from_groups, sender=Membership)
 
 post_save.connect(create_user_profile, sender=User)
@@ -312,10 +312,10 @@ pre_delete.connect(pre_delete_essaygrade,sender=EssayGrade)
 pre_delete.connect(pre_delete_user, sender=User)
 pre_delete.connect(remove_user_from_groups, sender=Membership)
 
-#Maps the get_profile() function of a user to an attribute profile
+# Maps the get_profile() function of a user to an attribute profile
 User.profile = property(lambda u: u.get_profile())
 
-#Register models with the django admin
+# Register models with the django admin
 admin.site.register(Organization)
 admin.site.register(Course)
 admin.site.register(Problem)
