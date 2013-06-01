@@ -1,6 +1,6 @@
 from django.conf.urls import *
 
-urlpatterns =patterns('frontend.views',
+urlpatterns = patterns('frontend.views',
     url(r'^course/$','course'),
     url(r'^user/$','user'),
     url(r'^problem/$','problem'),
