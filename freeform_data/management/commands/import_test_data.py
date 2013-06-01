@@ -22,6 +22,7 @@ from django.contrib.auth.models import User
 
 log = logging.getLogger(__name__)
 
+
 class Command(BaseCommand):
     args = "<filename>"
     help = "Poll grading controller and send items to be graded to ml"
