@@ -56,11 +56,11 @@ class Command(BaseCommand):
 
         user = User.objects.get(username='vik')
         organization, created = Organization.objects.get_or_create(
-            organization_name = "edX"
+            organization_name="edX"
         )
 
         course, created = Course.objects.get_or_create(
-            course_name = "edX101",
+            course_name="edX101",
         )
         if created:
             course.organizations.add(organization)
@@ -71,8 +71,8 @@ class Command(BaseCommand):
         course.save()
 
         problem, created = Problem.objects.get_or_create(
-            prompt = prompt,
-            name = name,
+            prompt=prompt,
+            name=name,
         )
         problem.courses.add(course)
         problem.save()
@@ -93,19 +93,19 @@ class Command(BaseCommand):
         problem.save()
         for i in range(0, min(essay_limit, len(text))):
             essay = Essay(
-                problem = problem,
-                user =user,
-                essay_type = "train",
-                essay_text = text[i],
+                problem=problem,
+                user=user,
+                essay_type="train",
+                essay_text=text[i],
             )
 
             essay.save()
             score = EssayGrade(
                 target_scores=json.dumps(grades[i]),
                 feedback="",
-                grader_type = grader_type,
-                essay = essay,
-                success = True,
+                grader_type=grader_type,
+                essay=essay,
+                success=True,
             )
             score.save()
 
