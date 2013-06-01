@@ -200,7 +200,7 @@ class CreateUserResource(ModelResource):
             raise BadRequest(errors.as_text())
         # Extract needed fields
         username, password, email = bundle.data['username'], bundle.data['password'], bundle.data['email']
-        data_dict = {'username' : username, 'email' : email, 'password' : password, 'password1' : password, 'password2' : password}
+        data_dict = {'username': username, 'email': email, 'password': password, 'password1': password, 'password2': password}
         # Pass the fields to django-allauth.  We want to use its email verification setup.
         signup_form = SignupForm()
         signup_form.cleaned_data = data_dict
