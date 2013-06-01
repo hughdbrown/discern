@@ -63,7 +63,7 @@ def get_first_resource_uri(type):
     # Get the urls needed
     endpoint, schema = get_urls(type)
     # Get the data on all models from the endpoint
-    data = c.get(endpoint, data={'format' : 'json'})
+    data = c.get(endpoint, data={'format': 'json'})
     # Grab a single object, and get the resource uri from it
     object = json.loads(data.content)['objects'][0]
     resource_uri = object['resource_uri']
@@ -96,7 +96,7 @@ def create_organization():
     Create an organization
     """
     Membership.objects.all().delete()
-    organization_object = {"name" : "edX"}
+    organization_object = {"name": "edX"}
     result = create_object("organization", organization_object)
     organization_resource_uri = json.loads(result.content)['resource_uri']
     return organization_resource_uri
@@ -106,7 +106,7 @@ def create_course():
     """
     Create a course
     """
-    course_object = {'course_name' : "edx_test"}
+    course_object = {'course_name': "edx_test"}
     result = create_object("course", course_object)
     course_resource_uri = json.loads(result.content)['resource_uri']
     return course_resource_uri
@@ -117,7 +117,7 @@ def create_problem():
     Create a problem
     """
     course_resource_uri = create_course()
-    problem_object = {'courses' : [course_resource_uri], 'max_target_scores' : json.dumps([1, 1]), 'prompt' : "blah"}
+    problem_object = {'courses': [course_resource_uri], 'max_target_scores': json.dumps([1, 1]), 'prompt': "blah"}
     result = create_object("problem", problem_object)
     problem_resource_uri = json.loads(result.content)['resource_uri']
     return problem_resource_uri
@@ -128,7 +128,7 @@ def create_essay():
     Create an essay
     """
     problem_resource_uri = create_problem()
-    essay_object = {'problem' : problem_resource_uri, 'essay_text' : "This is a test essay!", 'essay_type' : 'train'}
+    essay_object = {'problem': problem_resource_uri, 'essay_text': "This is a test essay!", 'essay_type': 'train'}
     result = create_object("essay", essay_object)
     essay_resource_uri = json.loads(result.content)['resource_uri']
     return essay_resource_uri
@@ -139,17 +139,17 @@ def create_essaygrade():
     Create an essaygrade
     """
     essay_resource_uri = create_essay()
-    essaygrade_object = {'essay' : essay_resource_uri, 'target_scores' : json.dumps([1, 1]), 'grader_type' : "IN", 'feedback' : "Was ok.", 'success' : True}
+    essaygrade_object = {'essay': essay_resource_uri, 'target_scores': json.dumps([1, 1]), 'grader_type': "IN", 'feedback': "Was ok.", 'success': True}
     result = create_object("essaygrade", essaygrade_object)
     essaygrade_resource_uri = json.loads(result.content)['resource_uri']
     return essaygrade_resource_uri
 
 model_registry = {
-    'course' : create_course,
-    'problem' : create_problem,
-    'essay' : create_essay,
-    'organization' : create_organization,
-    'essaygrade' : create_essaygrade,
+    'course': create_course,
+    'problem': create_problem,
+    'essay': create_essay,
+    'organization': create_organization,
+    'essaygrade': create_essaygrade,
 }
 
 
@@ -162,11 +162,11 @@ def create_ml_problem_and_essays(type, count):
 def create_ml_essays_only(type, count, problem_resource_uri):
     essay_list = []
     for i in xrange(0, count):
-        essay_object = {'problem' : problem_resource_uri, 'essay_text' : "This is a test essay!", 'essay_type' : type}
+        essay_object = {'problem': problem_resource_uri, 'essay_text': "This is a test essay!", 'essay_type': type}
         result = create_object("essay", essay_object)
         essay_resource_uri = json.loads(result.content)['resource_uri']
         essay_list.append(essay_resource_uri)
-        essaygrade_object = {'essay' : essay_resource_uri, 'target_scores' : json.dumps([1, 1]), 'grader_type' : "IN", 'feedback' : "Was ok.", 'success' : True}
+        essaygrade_object = {'essay': essay_resource_uri, 'target_scores': json.dumps([1, 1]), 'grader_type': "IN", 'feedback': "Was ok.", 'success': True}
         create_object("essaygrade", essaygrade_object)
     return essay_list
 
@@ -174,7 +174,7 @@ def create_ml_essays_only(type, count, problem_resource_uri):
 def lookup_object(resource_uri):
     c = login()
     result = c.get(resource_uri,
-                        data={'format' : 'json'}
+                        data={'format': 'json'}
     )
     return json.loads(result.content)
 
@@ -184,7 +184,7 @@ class GenericTest(object):
     Base class that other model tests inherit from.
     """
     type = "generic"
-    object = {'hello' : 'world'}
+    object = {'hello': 'world'}
 
     def generic_setup(self):
         """
@@ -199,7 +199,7 @@ class GenericTest(object):
         See if the schema can be downloaded
         """
         result = self.c.get(self.schema,
-                            data={'format' : 'json'}
+                            data={'format': 'json'}
         )
 
         self.assertEqual(result.status_code, 200)
@@ -209,7 +209,7 @@ class GenericTest(object):
         See if the GET method can be used with the endpoint
         """
         result = self.c.get(self.endpoint,
-                            data={'format' : 'json'}
+                            data={'format': 'json'}
         )
 
         self.assertEqual(result.status_code, 200)
@@ -243,7 +243,7 @@ class GenericTest(object):
         """
         object = model_registry[self.type]()
         result = self.c.get(object,
-                            data={'format' : 'json'}
+                            data={'format': 'json'}
         )
         self.assertEqual(result.status_code, 200)
 
@@ -255,14 +255,14 @@ class GenericTest(object):
         call_command('update_index', interactive=False)
         object = model_registry[self.type]()
         result = self.c.get(self.endpoint + "search/",
-                            data={'format' : 'json'}
+                            data={'format': 'json'}
         )
         self.assertEqual(result.status_code, 200)
 
 
 class OrganizationTest(unittest.TestCase, GenericTest):
     type = "organization"
-    object = {"name" : "edX"}
+    object = {"name": "edX"}
 
     def setUp(self):
         Membership.objects.all().delete()
@@ -271,7 +271,7 @@ class OrganizationTest(unittest.TestCase, GenericTest):
 
 class CourseTest(unittest.TestCase, GenericTest):
     type = "course"
-    object = {'course_name' : "edx_test"}
+    object = {'course_name': "edx_test"}
 
     def setUp(self):
         self.generic_setup()
@@ -286,7 +286,7 @@ class ProblemTest(unittest.TestCase, GenericTest):
 
     def create_object(self):
         course_resource_uri = create_course()
-        self.object = {'courses' : [course_resource_uri], 'max_target_scores' : json.dumps([1, 1]), 'prompt' : "blah"}
+        self.object = {'courses': [course_resource_uri], 'max_target_scores': json.dumps([1, 1]), 'prompt': "blah"}
 
 
 class EssayTest(unittest.TestCase, GenericTest):
@@ -298,7 +298,7 @@ class EssayTest(unittest.TestCase, GenericTest):
 
     def create_object(self):
         problem_resource_uri = create_problem()
-        self.object = {'problem' : problem_resource_uri, 'essay_text' : "This is a test essay!", 'essay_type' : 'train'}
+        self.object = {'problem': problem_resource_uri, 'essay_text': "This is a test essay!", 'essay_type': 'train'}
 
 
 class EssayGradeTest(unittest.TestCase, GenericTest):
@@ -310,7 +310,7 @@ class EssayGradeTest(unittest.TestCase, GenericTest):
 
     def create_object(self):
         essay_resource_uri = create_essay()
-        self.object = {'essay' : essay_resource_uri, 'target_scores' : json.dumps([1, 1]), 'grader_type' : "IN", 'feedback' : "Was ok.", 'success' : True}
+        self.object = {'essay': essay_resource_uri, 'target_scores': json.dumps([1, 1]), 'grader_type': "IN", 'feedback': "Was ok.", 'success': True}
 
 
 class CreateUserTest(unittest.TestCase):
@@ -323,9 +323,9 @@ class CreateUserTest(unittest.TestCase):
         self.c = login()
         self.endpoint, self.schema = get_urls(self.type)
         self.post_data = {
-            'username' : 'test1',
-            'password' : 'test1',
-            'email' : 'test1@test1.com'
+            'username': 'test1',
+            'password': 'test1',
+            'email': 'test1@test1.com'
         }
 
     def test_create(self):
@@ -377,7 +377,7 @@ class ViewTest(unittest.TestCase):
         Test the login view
         """
         login_url = reverse('freeform_data.views.login')
-        response = self.c.post(login_url, {'username' : 'test', 'password' : 'test'})
+        response = self.c.post(login_url, {'username': 'test', 'password': 'test'})
         log.debug(json.loads(response.content))
         response_code = json.loads(response.content)['success']
         self.assertEqual(response_code, True)
@@ -400,9 +400,9 @@ class FinalTest(unittest.TestCase):
         c = login()
         delete_all()
         endpoint, schema = get_urls("organization")
-        data = c.get(endpoint, data={'format' : 'json'})
+        data = c.get(endpoint, data={'format': 'json'})
         self.assertEqual(len(json.loads(data.content)['objects']), 0)
 
         endpoint, schema = get_urls("essaygrade")
-        data = c.get(endpoint, data={'format' : 'json'})
+        data = c.get(endpoint, data={'format': 'json'})
         self.assertEqual(len(json.loads(data.content)['objects']), 0)
