@@ -28,4 +28,3 @@ org_response = session.get(API_BASE_URL + "/essay_site/api/v1/organization/?offs
 
 for org in json.loads(org_response.text)['objects']:
 	print (u"Organization name: {0}, URI: {1} ".format(org['organization_name'], org['resource_uri']))
-
