@@ -74,15 +74,15 @@ def action(request):
         raise TypeError(error)
 
     # Define a base rubric
-    rubric = {'options' : []}
+    rubric = {'options': []}
     # If we are posting a problem, then there is additional processing to do before we can submit to the API
     if action == "post" and model == "problem":
         # Grab the rubric for later.
         rubric = data['rubric'].copy()
         # Add in two needed fields (the api requires them)
         data.update({
-            'max_target_scores' : [1 for i in xrange(0, len(data['rubric']['options']))],
-            'courses' : [helpers.construct_related_uri(data['course'], 'course')]
+            'max_target_scores': [1 for i in xrange(0, len(data['rubric']['options']))],
+            'courses': [helpers.construct_related_uri(data['course'], 'course')]
         })
         # Remove these keys (posting to the api will fail if they are still in)
         del data['rubric']
@@ -153,7 +153,7 @@ def course(request):
     """
     Render the page for courses
     """
-    return render_to_response('course.html', RequestContext(request, {'model' : 'course', 'api_url' : "/grader/action"}))
+    return render_to_response('course.html', RequestContext(request, {'model': 'course', 'api_url': "/grader/action"}))
 
 
 @login_required
@@ -183,11 +183,11 @@ def problem(request):
 
     matching_course_id = str(matching_course_id)
 
-    return render_to_response('problem.html', RequestContext(request, {'model' : 'problem',
-                                                                       'api_url' : "/grader/action",
-                                                                       'matching_course_id' : matching_course_id,
-                                                                       'match_course' : match_course,
-                                                                       'course_name' : course_name,
+    return render_to_response('problem.html', RequestContext(request, {'model': 'problem',
+                                                                       'api_url': "/grader/action",
+                                                                       'matching_course_id': matching_course_id,
+                                                                       'match_course': match_course,
+                                                                       'course_name': course_name,
     })
     )
 
@@ -197,7 +197,7 @@ def write_essays(request):
     """
     Render the page for writing essays
     """
-    return render_to_response('write_essay.html', RequestContext(request, {'api_url' : "/grader/action", 'model' : 'essay', }))
+    return render_to_response('write_essay.html', RequestContext(request, {'api_url': "/grader/action", 'model': 'essay', }))
 
 
 @login_required
@@ -205,4 +205,4 @@ def grade_essays(request):
     """
     Render the page for grading essays
     """
-    return render_to_response('grade_essay.html', RequestContext(request, {'api_url' : "/grader/action", 'model' : 'essaygrade', }))
+    return render_to_response('grade_essay.html', RequestContext(request, {'api_url': "/grader/action", 'model': 'essaygrade', }))
