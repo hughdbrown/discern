@@ -11,6 +11,8 @@ session = requests.session()
 response = login_to_discern(session)
 
 # add a problem statement. For the reddit example, we will use the title.
+
+
 def add_problem(the_prompt, the_class):
     uri = None
     problem_response = session.post(API_BASE_URL + "/essay_site/api/v1/problem/?format=json",
@@ -27,6 +29,8 @@ def add_problem(the_prompt, the_class):
     return problem_object['resource_uri']
 
 # Add essay grade objects that are instructor scored and associate each one with an essay.
+
+
 def add_score(the_essay_uri, the_score):
     score_response = session.post(API_BASE_URL + "/essay_site/api/v1/essaygrade/?format=json",
             data=json.dumps({
@@ -49,6 +53,8 @@ def add_score(the_essay_uri, the_score):
 
 # Add an essay objects and associate them with the problem.
 # returns resource_uri for the new essay object.
+
+
 def add_essay(the_text, the_problem_uri):
     uri = None
     essay_response = session.post(API_BASE_URL + "/essay_site/api/v1/essay/?format=json",
