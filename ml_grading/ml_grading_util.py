@@ -42,7 +42,7 @@ def get_model_path(problem, target_number=0):
     # Create a filepath from the problem id and target number that is unique across problems
     fixed_location="{0}_{1}".format(problem_id,target_number)
     # Add a time to make it unique within the scope of this problem
-    fixed_location+="_"+timezone.now().strftime("%Y%m%d%H%M%S")
+    fixed_location+="_" +timezone.now().strftime("%Y%m%d%H%M%S")
     full_path=os.path.join(base_path,fixed_location)
     # return relative and full path because this model may be sent to S3 and to other machines
     return fixed_location,full_path
@@ -106,7 +106,7 @@ def upload_to_s3(string_to_upload, keyname, bucketname):
         k = Key(bucket)
         k.key = keyname
         k.set_contents_from_string(string_to_upload)
-        public_url = k.generate_url(60*60*24*365)  # URL timeout in seconds.
+        public_url = k.generate_url(60 *60 *24 *365)  # URL timeout in seconds.
 
         return True, public_url
     except:
