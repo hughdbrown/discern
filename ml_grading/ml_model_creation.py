@@ -70,7 +70,7 @@ def handle_single_problem(problem):
     bad_list = []
     for i in xrange(0,len(essay_grades)):
         # All of the lists within the essay grade list (ie [[[1,1],[2,2]]) need to be the same length
-        if len(essay_grades[i])!=first_len:
+        if len(essay_grades[i]) != first_len:
             error_message = "Problem with an instructor scored essay! {0}".format(essay_grades)
             log.info(error_message)
             bad_list.append(i)
@@ -80,7 +80,7 @@ def handle_single_problem(problem):
 
     # Too many essays can take a very long time to train and eat up system resources.  Enforce a max.
     # Accuracy increases logarithmically, anyways, so you dont lose much here.
-    if len(essay_text)>MAX_ESSAYS_TO_TRAIN_WITH:
+    if len(essay_text) > MAX_ESSAYS_TO_TRAIN_WITH:
         essay_text = essay_text[:MAX_ESSAYS_TO_TRAIN_WITH]
         essay_grades = essay_grades[:MAX_ESSAYS_TO_TRAIN_WITH]
 
@@ -99,18 +99,18 @@ def handle_single_problem(problem):
         max_score = max(scores)
         log.debug("Currently on location {0} in problem {1}".format(m, problem.id))
         # Get paths to ml model from database
-        relative_model_path, full_model_path= ml_grading_util.get_model_path(problem,m)
+        relative_model_path, full_model_path = ml_grading_util.get_model_path(problem,m)
         # Get last created model for given location
         transaction.commit()
-        success, latest_created_model=ml_grading_util.get_latest_created_model(problem,m)
+        success, latest_created_model = ml_grading_util.get_latest_created_model(problem,m)
 
         if success:
-            sub_count_diff=graded_sub_count -latest_created_model.number_of_essays
+            sub_count_diff = graded_sub_count - latest_created_model.number_of_essays
         else:
             sub_count_diff = graded_sub_count
 
         # Retrain if no model exists, or every 10 graded essays.
-        if not success or sub_count_diff>=10:
+        if not success or sub_count_diff >= 10:
             log.info("Starting to create a model because none exists or it is time to retrain.")
             # Checks to see if another model creator process has started amodel for this location
             success, model_started, created_model = ml_grading_util.check_if_model_started(problem)
@@ -127,7 +127,7 @@ def handle_single_problem(problem):
                     model_started = False
             # If a model has not been started, then initialize an entry in the database to prevent other threads from duplicating work
             if not model_started:
-                created_model_dict_initial={
+                created_model_dict_initial = {
                     'max_score' : max_score,
                     'prompt' : prompt,
                     'problem' : problem,
@@ -172,7 +172,7 @@ def handle_single_problem(problem):
                         results['s3_public_url'] = ""
                         log.exception("Problem saving ML model.")
 
-                created_model_dict_final={
+                created_model_dict_final = {
                     'cv_kappa' : results['cv_kappa'],
                     'cv_mean_absolute_error' : results['cv_mean_absolute_error'],
                     'creation_succeeded': results['success'],
@@ -205,12 +205,12 @@ def save_model_file(results, save_to_s3):
     results - Dictionary of results from ML
     save_to_s3 - Boolean indicating whether or not to upload results
     """
-    success=False
+    success = False
     if save_to_s3:
-        pickled_model=ml_grading_util.get_pickle_data(results['prompt'], results['feature_ext'],
+        pickled_model = ml_grading_util.get_pickle_data(results['prompt'], results['feature_ext'],
             results['classifier'], results['text'],
             results['score'])
-        success, s3_public_url=ml_grading_util.upload_to_s3(pickled_model, results['relative_model_path'], str(settings.S3_BUCKETNAME))
+        success, s3_public_url = ml_grading_util.upload_to_s3(pickled_model, results['relative_model_path'], str(settings.S3_BUCKETNAME))
 
     try:
         ml_grading_util.dump_model_to_file(results['prompt'], results['feature_ext'],
