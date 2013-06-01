@@ -33,7 +33,7 @@ class GuardianAuthorization(Authorization):
 
         return model_klass
 
-    #Delete and update permissions can be consolidated into this function
+    # Delete and update permissions can be consolidated into this function
     def check_permissions(self, object_list,bundle, permission_name):
         klass = self.base_checks(bundle.request, object_list.model)
         update_list=[]
@@ -63,7 +63,7 @@ class GuardianAuthorization(Authorization):
         for obj in object_list:
             if check_permissions("view", bundle.request.user, obj):
                 read_list.append(obj)
-            #Permissions cannot be created for user models, so hack the permissions to show users their own info
+            # Permissions cannot be created for user models, so hack the permissions to show users their own info
             if getattr(klass,'__name__')=="User" and bundle.request.user.id == obj.id:
                 read_list.append(obj)
         # GET-style methods are always allowed.
@@ -73,16 +73,16 @@ class GuardianAuthorization(Authorization):
         klass = self.base_checks(bundle.request, bundle.obj.__class__)
         read_list=[]
 
-        #Users don't exist when their own User model is created, so hack to display user info to people
-        #This circumvents the normal permissions model and just shows users their own info
+        # Users don't exist when their own User model is created, so hack to display user info to people
+        # This circumvents the normal permissions model and just shows users their own info
         if getattr(klass,'__name__')=="User":
             if bundle.request.user.id == object_list[0].id:
                 return True
 
         read_list = self.check_permissions(object_list,bundle, "view")
 
-        #For some reason, checking if the user has access to the schema calls this function.
-        #Handle the case where the user has no objects available to show, but should be able to see the schema.
+        # For some reason, checking if the user has access to the schema calls this function.
+        # Handle the case where the user has no objects available to show, but should be able to see the schema.
         if "schema" in bundle.request.path:
             return True
 
@@ -113,7 +113,7 @@ class GuardianAuthorization(Authorization):
         for obj in object_list:
             create_list.append(obj)
 
-        #If the user cannot view the object list that was passed in, then they are unauthorized.
+        # If the user cannot view the object list that was passed in, then they are unauthorized.
         if len(create_list) != len(object_list):
             raise Unauthorized("You are not allowed to access that resource.")
 
