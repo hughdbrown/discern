@@ -24,7 +24,7 @@ def register(request):
         form = UserCreationForm()
     return render_to_response("registration/register.html", RequestContext(request, {
         'form': form,
-        }))
+    }))
 
 
 def index(request):
