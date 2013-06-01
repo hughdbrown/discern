@@ -23,11 +23,11 @@ from path import path
 # fab  -i /Users/nateaune/.rvm/gems/ruby-1.9.3-p374/gems/vagrant-1.0.7/keys/vagrant deploy
 
 # Usage:
-# MacOSX: 
+# MacOSX:
 # fab -i /Applications/Vagrant/embedded/gems/gems/vagrant-1.0.3/keys/vagrant deploy
 # On Nate's Mac using Homebrew:
-# fab  -i /Users/nateaune/.rvm/gems/ruby-1.9.3-p374/gems/vagrant-1.0.7/keys/vagrant deploy         
-# Debian/Ubuntu: 
+# fab  -i /Users/nateaune/.rvm/gems/ruby-1.9.3-p374/gems/vagrant-1.0.7/keys/vagrant deploy
+# Debian/Ubuntu:
 # fab -i /opt/vagrant/embedded/gems/gems/vagrant-1.0.3/keys/vagrant deploy
 
 #Define this path so that we can import the django settings
