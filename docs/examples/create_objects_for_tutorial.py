@@ -24,7 +24,7 @@ organization_resource_uri = organization_object['resource_uri']
 course_response = session.post(API_BASE_URL + "/essay_site/api/v1/course/?format=json",
         data=json.dumps(
     {"course_name": "Discern Tutorial",
-                 "organizations": [organization_resource_uri]
+     "organizations": [organization_resource_uri]
                  }),
     headers=headers)
 
