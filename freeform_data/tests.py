@@ -261,7 +261,7 @@ class GenericTest(object):
 
 
 class OrganizationTest(unittest.TestCase, GenericTest):
-    type="organization"
+    type = "organization"
     object = {"name" : "edX"}
 
     def setUp(self):
@@ -270,7 +270,7 @@ class OrganizationTest(unittest.TestCase, GenericTest):
 
 
 class CourseTest(unittest.TestCase, GenericTest):
-    type="course"
+    type = "course"
     object = {'course_name' : "edx_test"}
 
     def setUp(self):
@@ -278,7 +278,7 @@ class CourseTest(unittest.TestCase, GenericTest):
 
 
 class ProblemTest(unittest.TestCase, GenericTest):
-    type="problem"
+    type = "problem"
 
     def setUp(self):
         self.generic_setup()
@@ -290,7 +290,7 @@ class ProblemTest(unittest.TestCase, GenericTest):
 
 
 class EssayTest(unittest.TestCase, GenericTest):
-    type="essay"
+    type = "essay"
 
     def setUp(self):
         self.generic_setup()
@@ -302,7 +302,7 @@ class EssayTest(unittest.TestCase, GenericTest):
 
 
 class EssayGradeTest(unittest.TestCase, GenericTest):
-    type="essaygrade"
+    type = "essaygrade"
 
     def setUp(self):
         self.generic_setup()
