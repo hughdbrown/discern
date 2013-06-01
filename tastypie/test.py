@@ -301,7 +301,7 @@ class ResourceTestCase(TestCase):
             'oauth_timestamp': str(int(time.time())),
             'oauth_token': 'foo',
         }
-        return 'OAuth %s' % ','.join([key +'=' +value for key, value in oauth_data.items()])
+        return 'OAuth %s' % ','.join([key + '=' + value for key, value in oauth_data.items()])
 
     def assertHttpOK(self, resp):
         """
