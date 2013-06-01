@@ -467,6 +467,7 @@ class Serializer(object):
         """
         pass
 
+
 def get_type_string(data):
     """
     Translates a Python data type into a string format.
