@@ -36,6 +36,7 @@ else:
 #this is returned if the ML algorithm fails
 RESULT_FAILURE_DICT={'success' : False, 'errors' : 'Errors!', 'confidence' : 0, 'feedback' : "", 'score' : 0}
 
+
 @transaction.commit_manually
 def handle_single_essay(essay):
     #Needed to ensure that the DB is not wrapped in a transaction and pulls old data
@@ -113,6 +114,7 @@ def handle_single_essay(essay):
     transaction.commit()
     return True, "Successfully scored!"
 
+
 def load_model_file(created_model,use_full_path):
     """
     Tries to load a model file
@@ -148,6 +150,7 @@ def load_model_file(created_model,use_full_path):
         pass
 
     return True, grader_data
+
 
 def store_model_locally(created_model,results):
     """
